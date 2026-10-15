@@ -1,0 +1,15 @@
+// Monthly savings target. The row with the latest effectiveDate (then createdAt) is the
+// current one. Older rows are kept as history and are ignored by the savings logic.
+// Does not affect net worth.
+model SavingsTarget {
+  id            String   @id @default(uuid(7)) @db.Uuid
+  userId        String   @map("user_id") @db.Uuid
+  amountCents   Int      @map("amount_cents")
+  effectiveDate DateTime @map("effective_date") @db.Date
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, effectiveDate(sort: Desc), createdAt(sort: Desc)])
+  @@map("savings_targets")
+}

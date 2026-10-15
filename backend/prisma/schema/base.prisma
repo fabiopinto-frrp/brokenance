@@ -1,0 +1,26 @@
+// Prisma schema for Brokenance. One file per model, in this folder.
+//
+// This file holds the generator and the datasource. Models live in their own files:
+//   user.prisma, refresh-token.prisma, profile.prisma, transaction.prisma,
+//   subscription.prisma, savings-target.prisma, goal.prisma
+//
+// Conventions:
+// - Table names are plural snake_case (@@map), column names are snake_case (@map).
+// - IDs are UUID v7, timestamps are timestamptz, dates without a time are `date`.
+// - Every user-owned table has `userId` and is deleted together with its user (onDelete: Cascade).
+//
+// Money rules:
+// - All money is stored as integer cents (no floats).
+// - Transaction.amountCents is SIGNED: positive adds to net worth, negative subtracts.
+//     net worth = Profile.openingBalanceCents + SUM(Transaction.amountCents)
+// - SavingsTarget and Goal never affect net worth.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../../generated/prisma"
+  importFileExtension = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}

@@ -1,0 +1,34 @@
+enum SubscriptionPeriod {
+  MONTHLY
+  YEARLY
+
+  @@map("subscription_period")
+}
+
+// A recurring charge (gym, Netflix, a yearly insurance...). Each charge becomes a Transaction.
+model Subscription {
+  id                String             @id @default(uuid(7)) @db.Uuid
+  userId            String             @map("user_id") @db.Uuid
+  name              String
+  // Charged every period. Positive value, the charge transaction is stored negative.
+  amountCents       Int                @map("amount_cents")
+  period            SubscriptionPeriod @default(MONTHLY)
+  // Day of the month (1-31). In shorter months the last day of the month is used.
+  billingDay        Int                @map("billing_day")
+  // Yearly only: the month it is charged (1-12). Null for monthly subscriptions.
+  billingMonth      Int?               @map("billing_month")
+  // First date a charge may happen: the day it was created, resumed or changed period. A billing
+  // date that already passed is not charged (that money already left), today's is.
+  chargeFrom        DateTime           @map("charge_from") @db.Date
+  active            Boolean            @default(true)
+  // Date of the last charge. Its month (monthly) or year (yearly) is the last period charged.
+  lastChargedPeriod DateTime?          @map("last_charged_period") @db.Date
+  createdAt         DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt         DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@index([userId])
+  @@map("subscriptions")
+}

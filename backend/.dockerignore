@@ -1,0 +1,12 @@
+node_modules
+# Env files are passed by docker compose (env_file), never baked into the image.
+.env
+.env.*
+.git
+coverage
+test
+generated
+.npm-cache
+Dockerfile
+docker-compose.yml
+docker-compose.prod.yml

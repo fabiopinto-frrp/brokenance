@@ -1,0 +1,21 @@
+model Profile {
+  userId                 String    @id @map("user_id") @db.Uuid
+  firstName              String    @map("first_name")
+  lastName               String    @map("last_name")
+  // Net worth the user typed in by hand. Current net worth = this + SUM(transactions).
+  openingBalanceCents    Int       @default(0) @map("opening_balance_cents")
+  // When the user first typed their net worth. Null until then. Later edits become
+  // ADJUSTMENT transactions instead of changing the opening balance.
+  netWorthSetAt          DateTime? @map("net_worth_set_at") @db.Timestamptz(3)
+  // Company payment added on the 1st of every month.
+  monthlyIncomeCents     Int       @default(0) @map("monthly_income_cents")
+  currency               String    @default("EUR")
+  timezone               String    @default("Europe/Lisbon")
+  // First day of the last month whose income was applied.
+  lastIncomeAppliedMonth DateTime? @map("last_income_applied_month") @db.Date
+  updatedAt              DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
