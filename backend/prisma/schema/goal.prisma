@@ -1,0 +1,17 @@
+// Save `targetCents` to buy `name`. Progress (`savedCents`) is updated by hand
+// and does not take money from anything, so it never affects net worth.
+model Goal {
+  id          String    @id @default(uuid(7)) @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  name        String
+  targetCents Int       @map("target_cents")
+  savedCents  Int       @default(0) @map("saved_cents")
+  deadline    DateTime? @db.Date
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("goals")
+}
