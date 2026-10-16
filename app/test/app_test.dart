@@ -9,7 +9,7 @@ void main() {
     await pumpApp(tester, loggedIn: true);
 
     expect(find.widgetWithText(AppBar, 'Dashboard'), findsOneWidget);
-    expect(find.text('Coming soon'), findsOneWidget);
+    expect(find.text('Your money at a glance'), findsOneWidget);
   });
 
   testWidgets('the drawer shows the user and every section, and navigates', (tester) async {

@@ -13,15 +13,17 @@ class ListPage<D> extends StatelessWidget {
     required this.state,
     required this.onRefresh,
     required this.builder,
-    required this.addLabel,
-    required this.onAdd,
+    this.addLabel,
+    this.onAdd,
   });
 
   final ListState<D> state;
   final Future<void> Function() onRefresh;
   final Widget Function(BuildContext context, D data) builder;
-  final String addLabel;
-  final VoidCallback onAdd;
+
+  /// The "+ Add" button. Leave both null for a screen without one (the dashboard).
+  final String? addLabel;
+  final VoidCallback? onAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +40,12 @@ class ListPage<D> extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: AnimatedSwitcher(duration: AppDurations.medium, child: body),
-      floatingActionButton: data == null
+      floatingActionButton: data == null || onAdd == null
           ? null
           : FloatingActionButton.extended(
               onPressed: onAdd,
               icon: const Icon(Icons.add_rounded),
-              label: Text(addLabel),
+              label: Text(addLabel!),
             ),
     );
   }

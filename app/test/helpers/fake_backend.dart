@@ -124,6 +124,11 @@ class FakeBackend {
   final Map<String, _Money> _moneyByUser = {};
   _Money _money(String username) => _moneyByUser.putIfAbsent(username, _Money.new);
 
+  /// Sets a user's balance as if they had typed it in Profile.
+  void setBalance(String username, int cents) => _money(username)
+    ..netWorth = cents
+    ..netWorthSet = true;
+
   /// The money of a user, to check what the app sent.
   ({int income, int netWorth, bool netWorthSet}) moneyOf(String username) {
     final money = _money(username);
@@ -153,6 +158,11 @@ class FakeBackend {
     final method = request.method;
 
     switch (collection) {
+      case 'dashboard':
+        return FakeResponse(
+          200,
+          _dashboard(username, int.parse('${request.queryParameters['months'] ?? 6}')),
+        );
       case 'transactions':
         return _crud(
           transactionsOf(username),
@@ -261,6 +271,68 @@ class FakeBackend {
         );
     }
     return null;
+  }
+
+  /// The last [count] months: spending per category from the transactions, the balance at the end
+  /// of each month worked back from today's balance.
+  Map<String, dynamic> _dashboard(String username, int count) {
+    final now = DateTime.parse(today);
+    final months = [
+      for (var i = count - 1; i >= 0; i--)
+        '${DateTime(now.year, now.month - i).year}-${'${DateTime(now.year, now.month - i).month}'.padLeft(2, '0')}',
+    ];
+    var balance = _money(username).netWorth;
+    final summaries = <Map<String, dynamic>>[];
+    for (final month in months.reversed) {
+      final items = transactionsOf(username).where((item) => (item['date'] as String).startsWith(month));
+      int spent(String type) => items
+          .where((item) => item['type'] == type)
+          .fold(0, (sum, item) => sum - (item['amountCents'] as int));
+      final byCategory = {
+        'expense': spent('expense'),
+        'outing': spent('outing'),
+        'leisure': spent('leisure'),
+        'subscription_charge': 0,
+      };
+      final spending = byCategory.values.fold(0, (a, b) => a + b);
+      summaries.insert(0, {
+        'month': month,
+        'incomeCents': 0,
+        'spendingCents': spending,
+        'leftCents': -spending,
+        'spendingByCategory': byCategory,
+        'netWorthCents': balance,
+      });
+      balance += spending;
+    }
+    final savings = [...savingsOf(username)]
+      ..sort((a, b) => (b['effectiveDate'] as String).compareTo(a['effectiveDate'] as String));
+    final target = savings.isEmpty ? null : savings.first['amountCents'] as int;
+    final left = summaries.last['leftCents'] as int;
+    final goals = [for (final goal in goalsOf(username)) _goalView(username, goal)];
+    final subscriptions =
+        _lists(username, RequestOptions(path: '/subscriptions'), {})!.body as Map<String, dynamic>;
+    return {
+      'netWorthCents': _money(username).netWorth,
+      'currentMonth': summaries.last,
+      'months': summaries,
+      'savings': {
+        'targetCents': target,
+        'leftThisMonthCents': left,
+        'onTrack': target == null ? null : left >= target,
+      },
+      'goals': {
+        'items': goals,
+        'totalTargetCents': goals.fold(0, (sum, goal) => sum + (goal['targetCents'] as int)),
+        'totalSavedCents': goals.fold(0, (sum, goal) => sum + (goal['savedCents'] as int)),
+      },
+      'subscriptions': {
+        'activeCount': (subscriptions['items'] as List).where((item) => item['active'] == true).length,
+        'monthlyTotalCents': subscriptions['monthlyTotalCents'],
+        'yearlyTotalCents': subscriptions['yearlyTotalCents'],
+        'averagePerMonthCents': subscriptions['averagePerMonthCents'],
+      },
+    };
   }
 
   FakeResponse _crud(

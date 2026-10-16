@@ -67,12 +67,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageEnglish => 'English';
 
   @override
-  String get comingSoonTitle => 'Coming soon';
-
-  @override
-  String get comingSoonMessage => 'This screen is being built.';
-
-  @override
   String get loginSubtitle => 'Log in to continue.';
 
   @override
@@ -139,8 +133,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logoutConfirmTitle => 'Log out?';
 
   @override
-  String get logoutConfirmMessage =>
-      'You\'ll need your username and password to log in again.';
+  String get logoutConfirmMessage => 'You\'ll need your username and password to log in again.';
 
   @override
   String get cancel => 'Cancel';
@@ -171,8 +164,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileBalanceSetupButton => 'Set balance';
 
   @override
-  String get profileBalanceAdjustNote =>
-      'The difference is saved in your history as an adjustment.';
+  String get profileBalanceAdjustNote => 'The difference is saved in your history as an adjustment.';
 
   @override
   String get profileIncomeTitle => 'Monthly income';
@@ -197,8 +189,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileChangePassword => 'Change password';
 
   @override
-  String get profileChangePasswordNote =>
-      'Your other devices will be logged out.';
+  String get profileChangePasswordNote => 'Your other devices will be logged out.';
 
   @override
   String get profilePasswordChanged => 'Password changed';
@@ -252,8 +243,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expensesEmptyTitle => 'No expenses yet';
 
   @override
-  String get expensesEmptyMessage =>
-      'Add what you spend, like groceries or bills.';
+  String get expensesEmptyMessage => 'Add what you spend, like groceries or bills.';
 
   @override
   String get outingsEmptyTitle => 'No outings or holidays yet';
@@ -364,8 +354,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get savingsEdit => 'Edit savings target';
 
   @override
-  String get savingsNewNote =>
-      'It becomes your current target. The previous one stays in the history.';
+  String get savingsNewNote => 'It becomes your current target. The previous one stays in the history.';
 
   @override
   String get savingsCurrentLabel => 'You want to save per month';
@@ -385,8 +374,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goalsEmptyTitle => 'No goals yet';
 
   @override
-  String get goalsEmptyMessage =>
-      'Save for something: a laptop, a trip, a car.';
+  String get goalsEmptyMessage => 'Save for something: a laptop, a trip, a car.';
 
   @override
   String get goalNew => 'New goal';
@@ -446,14 +434,97 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String dashboardBalanceChange(String amount) {
+    return '$amount since the end of last month';
+  }
+
+  @override
+  String get dashboardThisMonth => 'This month';
+
+  @override
+  String get dashboardIncome => 'Income';
+
+  @override
+  String get dashboardSpent => 'Spent';
+
+  @override
+  String get dashboardLeft => 'Left';
+
+  @override
+  String dashboardSavingsOnTrack(String target) {
+    return 'On track for your $target savings target';
+  }
+
+  @override
+  String dashboardSavingsShort(String amount, String target) {
+    return '$amount short of your $target savings target';
+  }
+
+  @override
+  String get dashboardBalanceTitle => 'Balance';
+
+  @override
+  String dashboardBalanceAt(String month, String amount) {
+    return 'Balance at the end of $month: $amount';
+  }
+
+  @override
+  String dashboardMonths(int count) {
+    return '$count months';
+  }
+
+  @override
+  String dashboardMonthsShort(int count) {
+    return '${count}M';
+  }
+
+  @override
+  String get dashboardSpendingTitle => 'Spending this month';
+
+  @override
+  String get dashboardSpendingEmpty => 'Nothing spent this month yet.';
+
+  @override
+  String get dashboardIncomeVsSpending => 'Income vs spending';
+
+  @override
+  String dashboardGoalsTotal(String saved, String target) {
+    return '$saved of $target saved';
+  }
+
+  @override
+  String dashboardSubscriptionsSummary(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count active · $amount per month',
+      one: '1 active · $amount per month',
+      zero: 'No active subscriptions',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboardSeeAll => 'See all';
+
+  @override
+  String get dashboardEmptyTitle => 'Your money at a glance';
+
+  @override
+  String get dashboardEmptyMessage =>
+      'Set your current balance in Profile to start. Then add expenses, subscriptions and goals.';
+
+  @override
+  String get dashboardOpenProfile => 'Open Profile';
+
+  @override
   String get errorNetwork => 'Can\'t reach the server. Check your connection.';
 
   @override
   String get errorTimeout => 'The server took too long to answer. Try again.';
 
   @override
-  String get errorSessionExpired =>
-      'Your session has expired. Please log in again.';
+  String get errorSessionExpired => 'Your session has expired. Please log in again.';
 
   @override
   String get errorUnknown => 'Something went wrong. Try again.';
@@ -465,12 +536,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorUsernameTaken => 'This username is already taken.';
 
   @override
-  String get errorRegistrationDisabled =>
-      'Creating new accounts is turned off.';
+  String get errorRegistrationDisabled => 'Creating new accounts is turned off.';
 
   @override
-  String get errorTooManyRequests =>
-      'Too many attempts. Wait a few minutes and try again.';
+  String get errorTooManyRequests => 'Too many attempts. Wait a few minutes and try again.';
 
   @override
   String get errorValidation => 'Some fields are not valid.';

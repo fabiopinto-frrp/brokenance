@@ -12,6 +12,7 @@ import 'core/theme/theme_cubit.dart';
 import 'features/auth/bloc/auth_bloc.dart';
 import 'features/auth/data/auth_repository.dart';
 import 'features/profile/bloc/profile_cubit.dart';
+import 'features/dashboard/data/dashboard_repository.dart';
 import 'features/goals/data/goal_repository.dart';
 import 'features/profile/data/profile_repository.dart';
 import 'features/savings/data/savings_repository.dart';
@@ -36,6 +37,7 @@ class BrokenanceApp extends StatelessWidget {
         RepositoryProvider(create: (_) => SubscriptionRepository(apiClient)),
         RepositoryProvider(create: (_) => SavingsRepository(apiClient)),
         RepositoryProvider(create: (_) => GoalRepository(apiClient)),
+        RepositoryProvider(create: (_) => DashboardRepository(apiClient)),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -90,6 +92,10 @@ class _AppViewState extends State<_AppView> {
       // The app's own strings, plus the Material and Cupertino ones (dialogs, date pickers...).
       localizationsDelegates: const [AppLocalizations.delegate, ...GlobalMaterialLocalizations.delegates],
       routerConfig: _router,
+      // Some packages (fl_chart) still use Flutter's built-in Material. The bridge gives them this
+      // app's theme and localizations. Remove it once they move to material_ui.
+      // ignore: deprecated_member_use
+      builder: (context, child) => MaterialUiCompatibilityBridge(child: child!),
     );
   }
 }

@@ -4,7 +4,7 @@ A personal finance app built with Flutter. Simple, fast and good-looking, with a
 
 The goal is to give you a clear picture of your money at a glance: what you have, what you spend, what you save, and what you are saving for.
 
-> Status: the backend API is complete. The Flutter app is being built (setup done).
+> Status: the backend API and the Flutter app are complete (Android checked; iOS needs Xcode selected, see below).
 
 ---
 
@@ -87,7 +87,16 @@ docker compose up -d     # API on http://localhost:3000 and PostgreSQL
 
 ### App
 
-Instructions will be added once the app is built.
+Requirements: Flutter (stable), an iOS simulator or Android emulator, and the backend running.
+
+```sh
+cd app
+flutter pub get
+flutter run
+```
+
+On macOS, iOS builds need Xcode selected once: `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`.
+More in [app/README.md](app/README.md).
 
 ---
 
@@ -99,5 +108,5 @@ Instructions will be added once the app is built.
 - [x] Login, register, staying logged in, logout and session expiry
 - [x] Profile: balance, monthly income, name, change password
 - [x] Lists with add/edit/delete: Despesas, Saídas/Férias, Lazer, Subscrições, Poupança, Objetivos
-- [ ] Dashboard with charts
-- [ ] Connect the app to the API
+- [x] Dashboard with charts: balance over time, spending by category, income vs spending, goals
+- [x] Connect the app to the API

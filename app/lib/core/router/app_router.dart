@@ -7,6 +7,7 @@ import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/view/login_page.dart';
 import '../../features/auth/view/register_page.dart';
 import '../../features/auth/view/splash_page.dart';
+import '../../features/dashboard/view/dashboard_page.dart';
 import '../../features/goals/view/goals_page.dart';
 import '../../features/profile/view/profile_page.dart';
 import '../../features/savings/view/savings_page.dart';
@@ -16,7 +17,6 @@ import '../../features/transactions/data/transaction.dart';
 import '../../features/transactions/view/transactions_page.dart';
 import '../theme/app_tokens.dart';
 import '../widgets/app_shell.dart';
-import '../widgets/coming_soon.dart';
 import 'app_destinations.dart';
 import 'app_routes.dart';
 
@@ -64,6 +64,7 @@ String? authRedirect(AuthStatus status, String location) {
 }
 
 Widget _pageFor(AppDestination destination) => switch (destination) {
+  AppDestination.dashboard => const DashboardPage(),
   AppDestination.profile => const ProfilePage(),
   AppDestination.subscriptions => const SubscriptionsPage(),
   AppDestination.expenses => const TransactionsPage(kind: TransactionKind.expense),
@@ -72,7 +73,6 @@ Widget _pageFor(AppDestination destination) => switch (destination) {
   AppDestination.savings => const SavingsPage(),
   AppDestination.goals => const GoalsPage(),
   AppDestination.settings => const SettingsPage(),
-  _ => ComingSoon(icon: destination.selectedIcon),
 };
 
 /// Switching sections cross-fades the content.

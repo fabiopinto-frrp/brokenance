@@ -67,12 +67,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get languageEnglish => 'English';
 
   @override
-  String get comingSoonTitle => 'Em breve';
-
-  @override
-  String get comingSoonMessage => 'Este ecrã está a ser construído.';
-
-  @override
   String get loginSubtitle => 'Inicia sessão para continuar.';
 
   @override
@@ -171,8 +165,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get profileBalanceSetupButton => 'Definir saldo';
 
   @override
-  String get profileBalanceAdjustNote =>
-      'A diferença fica guardada no teu histórico como um ajuste.';
+  String get profileBalanceAdjustNote => 'A diferença fica guardada no teu histórico como um ajuste.';
 
   @override
   String get profileIncomeTitle => 'Rendimento mensal';
@@ -197,8 +190,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get profileChangePassword => 'Alterar palavra-passe';
 
   @override
-  String get profileChangePasswordNote =>
-      'Os teus outros dispositivos vão terminar sessão.';
+  String get profileChangePasswordNote => 'Os teus outros dispositivos vão terminar sessão.';
 
   @override
   String get profilePasswordChanged => 'Palavra-passe alterada';
@@ -252,15 +244,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get expensesEmptyTitle => 'Ainda sem despesas';
 
   @override
-  String get expensesEmptyMessage =>
-      'Adiciona o que gastas, como o supermercado ou as contas.';
+  String get expensesEmptyMessage => 'Adiciona o que gastas, como o supermercado ou as contas.';
 
   @override
   String get outingsEmptyTitle => 'Ainda sem saídas ou férias';
 
   @override
-  String get outingsEmptyMessage =>
-      'Adiciona jantares fora, passeios e férias.';
+  String get outingsEmptyMessage => 'Adiciona jantares fora, passeios e férias.';
 
   @override
   String get leisureEmptyTitle => 'Ainda sem lazer';
@@ -365,8 +355,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get savingsEdit => 'Editar meta de poupança';
 
   @override
-  String get savingsNewNote =>
-      'Passa a ser a tua meta atual. A anterior fica no histórico.';
+  String get savingsNewNote => 'Passa a ser a tua meta atual. A anterior fica no histórico.';
 
   @override
   String get savingsCurrentLabel => 'Queres poupar por mês';
@@ -386,8 +375,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get goalsEmptyTitle => 'Ainda sem objetivos';
 
   @override
-  String get goalsEmptyMessage =>
-      'Poupa para algo: um portátil, uma viagem, um carro.';
+  String get goalsEmptyMessage => 'Poupa para algo: um portátil, uma viagem, um carro.';
 
   @override
   String get goalNew => 'Novo objetivo';
@@ -447,42 +435,118 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get errorNetwork =>
-      'Não foi possível contactar o servidor. Verifica a tua ligação.';
+  String dashboardBalanceChange(String amount) {
+    return '$amount desde o fim do mês passado';
+  }
 
   @override
-  String get errorTimeout =>
-      'O servidor demorou demasiado a responder. Tenta novamente.';
+  String get dashboardThisMonth => 'Este mês';
 
   @override
-  String get errorSessionExpired =>
-      'A tua sessão expirou. Inicia sessão novamente.';
+  String get dashboardIncome => 'Rendimento';
+
+  @override
+  String get dashboardSpent => 'Gasto';
+
+  @override
+  String get dashboardLeft => 'Sobra';
+
+  @override
+  String dashboardSavingsOnTrack(String target) {
+    return 'No caminho certo para a meta de $target';
+  }
+
+  @override
+  String dashboardSavingsShort(String amount, String target) {
+    return 'Faltam $amount para a meta de $target';
+  }
+
+  @override
+  String get dashboardBalanceTitle => 'Saldo';
+
+  @override
+  String dashboardBalanceAt(String month, String amount) {
+    return 'Saldo no fim de $month: $amount';
+  }
+
+  @override
+  String dashboardMonths(int count) {
+    return '$count meses';
+  }
+
+  @override
+  String dashboardMonthsShort(int count) {
+    return '${count}M';
+  }
+
+  @override
+  String get dashboardSpendingTitle => 'Gastos deste mês';
+
+  @override
+  String get dashboardSpendingEmpty => 'Ainda não gastaste nada este mês.';
+
+  @override
+  String get dashboardIncomeVsSpending => 'Rendimento vs gastos';
+
+  @override
+  String dashboardGoalsTotal(String saved, String target) {
+    return '$saved de $target poupados';
+  }
+
+  @override
+  String dashboardSubscriptionsSummary(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ativas · $amount por mês',
+      one: '1 ativa · $amount por mês',
+      zero: 'Sem subscrições ativas',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get dashboardSeeAll => 'Ver tudo';
+
+  @override
+  String get dashboardEmptyTitle => 'O teu dinheiro num relance';
+
+  @override
+  String get dashboardEmptyMessage =>
+      'Define o teu saldo atual no Perfil para começar. Depois adiciona despesas, subscrições e objetivos.';
+
+  @override
+  String get dashboardOpenProfile => 'Abrir Perfil';
+
+  @override
+  String get errorNetwork => 'Não foi possível contactar o servidor. Verifica a tua ligação.';
+
+  @override
+  String get errorTimeout => 'O servidor demorou demasiado a responder. Tenta novamente.';
+
+  @override
+  String get errorSessionExpired => 'A tua sessão expirou. Inicia sessão novamente.';
 
   @override
   String get errorUnknown => 'Algo correu mal. Tenta novamente.';
 
   @override
-  String get errorInvalidCredentials =>
-      'Nome de utilizador ou palavra-passe incorretos.';
+  String get errorInvalidCredentials => 'Nome de utilizador ou palavra-passe incorretos.';
 
   @override
-  String get errorUsernameTaken =>
-      'Este nome de utilizador já está a ser usado.';
+  String get errorUsernameTaken => 'Este nome de utilizador já está a ser usado.';
 
   @override
-  String get errorRegistrationDisabled =>
-      'A criação de novas contas está desativada.';
+  String get errorRegistrationDisabled => 'A criação de novas contas está desativada.';
 
   @override
-  String get errorTooManyRequests =>
-      'Demasiadas tentativas. Espera uns minutos e tenta novamente.';
+  String get errorTooManyRequests => 'Demasiadas tentativas. Espera uns minutos e tenta novamente.';
 
   @override
   String get errorValidation => 'Alguns campos não são válidos.';
 
   @override
-  String get errorInvalidCurrentPassword =>
-      'A palavra-passe atual está errada.';
+  String get errorInvalidCurrentPassword => 'A palavra-passe atual está errada.';
 
   @override
   String get retry => 'Tentar novamente';

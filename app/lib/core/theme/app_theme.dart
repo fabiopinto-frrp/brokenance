@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 import 'app_palette.dart';
 import 'app_tokens.dart';
+import 'chart_colors.dart';
 
 /// Light and dark themes. Material 3 underneath, but every component is styled so the app
 /// looks minimal (Apple / Tesla): flat surfaces, soft borders, large radii, no tinted elevation.
@@ -12,6 +13,7 @@ abstract final class AppTheme {
   static ThemeData light() => _build(
     brightness: Brightness.light,
     colors: AppColors.light,
+    charts: ChartColors.light,
     scheme: const ColorScheme.light(
       primary: AppPalette.lightAccent,
       onPrimary: Colors.white,
@@ -31,6 +33,7 @@ abstract final class AppTheme {
   static ThemeData dark() => _build(
     brightness: Brightness.dark,
     colors: AppColors.dark,
+    charts: ChartColors.dark,
     scheme: const ColorScheme.dark(
       primary: AppPalette.darkAccent,
       onPrimary: Colors.white,
@@ -51,6 +54,7 @@ abstract final class AppTheme {
     required Brightness brightness,
     required ColorScheme scheme,
     required AppColors colors,
+    required ChartColors charts,
   }) {
     final textTheme = _textTheme(scheme.onSurface, colors.textSecondary);
     final isDark = brightness == Brightness.dark;
@@ -62,7 +66,7 @@ abstract final class AppTheme {
       scaffoldBackgroundColor: colors.background,
       canvasColor: colors.background,
       textTheme: textTheme,
-      extensions: [colors],
+      extensions: [colors, charts],
       splashFactory: InkSparkle.splashFactory,
       appBarTheme: AppBarTheme(
         backgroundColor: colors.background,

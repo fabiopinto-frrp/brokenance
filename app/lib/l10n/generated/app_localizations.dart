@@ -62,8 +62,7 @@ import 'app_localizations_pt.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -71,8 +70,7 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate =
-      _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -84,19 +82,15 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
-        delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
-    Locale('pt'),
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('pt')];
 
   /// No description provided for @appTitle.
   ///
@@ -211,18 +205,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'English'**
   String get languageEnglish;
-
-  /// No description provided for @comingSoonTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Coming soon'**
-  String get comingSoonTitle;
-
-  /// No description provided for @comingSoonMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'This screen is being built.'**
-  String get comingSoonMessage;
 
   /// No description provided for @loginSubtitle.
   ///
@@ -890,6 +872,126 @@ abstract class AppLocalizations {
   /// **'Saved so far: {amount}'**
   String goalAddNote(String amount);
 
+  /// No description provided for @dashboardBalanceChange.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} since the end of last month'**
+  String dashboardBalanceChange(String amount);
+
+  /// No description provided for @dashboardThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This month'**
+  String get dashboardThisMonth;
+
+  /// No description provided for @dashboardIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get dashboardIncome;
+
+  /// No description provided for @dashboardSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent'**
+  String get dashboardSpent;
+
+  /// No description provided for @dashboardLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Left'**
+  String get dashboardLeft;
+
+  /// No description provided for @dashboardSavingsOnTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'On track for your {target} savings target'**
+  String dashboardSavingsOnTrack(String target);
+
+  /// No description provided for @dashboardSavingsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} short of your {target} savings target'**
+  String dashboardSavingsShort(String amount, String target);
+
+  /// No description provided for @dashboardBalanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get dashboardBalanceTitle;
+
+  /// No description provided for @dashboardBalanceAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance at the end of {month}: {amount}'**
+  String dashboardBalanceAt(String month, String amount);
+
+  /// No description provided for @dashboardMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} months'**
+  String dashboardMonths(int count);
+
+  /// No description provided for @dashboardMonthsShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}M'**
+  String dashboardMonthsShort(int count);
+
+  /// No description provided for @dashboardSpendingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending this month'**
+  String get dashboardSpendingTitle;
+
+  /// No description provided for @dashboardSpendingEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing spent this month yet.'**
+  String get dashboardSpendingEmpty;
+
+  /// No description provided for @dashboardIncomeVsSpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Income vs spending'**
+  String get dashboardIncomeVsSpending;
+
+  /// No description provided for @dashboardGoalsTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'{saved} of {target} saved'**
+  String dashboardGoalsTotal(String saved, String target);
+
+  /// No description provided for @dashboardSubscriptionsSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No active subscriptions} =1{1 active · {amount} per month} other{{count} active · {amount} per month}}'**
+  String dashboardSubscriptionsSummary(int count, String amount);
+
+  /// No description provided for @dashboardSeeAll.
+  ///
+  /// In en, this message translates to:
+  /// **'See all'**
+  String get dashboardSeeAll;
+
+  /// No description provided for @dashboardEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your money at a glance'**
+  String get dashboardEmptyTitle;
+
+  /// No description provided for @dashboardEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your current balance in Profile to start. Then add expenses, subscriptions and goals.'**
+  String get dashboardEmptyMessage;
+
+  /// No description provided for @dashboardOpenProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Profile'**
+  String get dashboardOpenProfile;
+
   /// No description provided for @errorNetwork.
   ///
   /// In en, this message translates to:
@@ -957,8 +1059,7 @@ abstract class AppLocalizations {
   String get retry;
 }
 
-class _AppLocalizationsDelegate
-    extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -967,8 +1068,7 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'pt'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

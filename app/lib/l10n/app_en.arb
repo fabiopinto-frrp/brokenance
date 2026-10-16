@@ -19,8 +19,6 @@
   "languageSystem": "System",
   "languagePortuguese": "Português",
   "languageEnglish": "English",
-  "comingSoonTitle": "Coming soon",
-  "comingSoonMessage": "This screen is being built.",
   "loginSubtitle": "Log in to continue.",
   "loginButton": "Log in",
   "loginNoAccount": "Don't have an account?",
@@ -219,6 +217,94 @@
       }
     }
   },
+  "dashboardBalanceChange": "{amount} since the end of last month",
+  "@dashboardBalanceChange": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardThisMonth": "This month",
+  "dashboardIncome": "Income",
+  "dashboardSpent": "Spent",
+  "dashboardLeft": "Left",
+  "dashboardSavingsOnTrack": "On track for your {target} savings target",
+  "@dashboardSavingsOnTrack": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardSavingsShort": "{amount} short of your {target} savings target",
+  "@dashboardSavingsShort": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardBalanceTitle": "Balance",
+  "dashboardBalanceAt": "Balance at the end of {month}: {amount}",
+  "@dashboardBalanceAt": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardMonths": "{count} months",
+  "dashboardMonthsShort": "{count}M",
+  "@dashboardMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@dashboardMonthsShort": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dashboardSpendingTitle": "Spending this month",
+  "dashboardSpendingEmpty": "Nothing spent this month yet.",
+  "dashboardIncomeVsSpending": "Income vs spending",
+  "dashboardGoalsTotal": "{saved} of {target} saved",
+  "@dashboardGoalsTotal": {
+    "placeholders": {
+      "saved": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardSubscriptionsSummary": "{count, plural, =0{No active subscriptions} =1{1 active · {amount} per month} other{{count} active · {amount} per month}}",
+  "@dashboardSubscriptionsSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardSeeAll": "See all",
+  "dashboardEmptyTitle": "Your money at a glance",
+  "dashboardEmptyMessage": "Set your current balance in Profile to start. Then add expenses, subscriptions and goals.",
+  "dashboardOpenProfile": "Open Profile",
   "errorNetwork": "Can't reach the server. Check your connection.",
   "errorTimeout": "The server took too long to answer. Try again.",
   "errorSessionExpired": "Your session has expired. Please log in again.",
