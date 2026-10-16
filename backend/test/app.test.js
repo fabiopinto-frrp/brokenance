@@ -46,3 +46,9 @@ describe('invalid JSON body', () => {
     expect(response.body.error.code).toBe('invalid_json');
   });
 });
+
+describe('settings', () => {
+  it('does not trust X-Forwarded-For unless a proxy is configured', () => {
+    expect(createApp().get('trust proxy')).toBe(0);
+  });
+});

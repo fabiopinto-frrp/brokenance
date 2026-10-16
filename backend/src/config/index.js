@@ -14,7 +14,11 @@ const schema = z.object({
   ACCESS_TOKEN_TTL: z.string().default('15m'),
   REFRESH_TOKEN_TTL_DAYS: z.coerce.number().int().positive().default(30),
   REGISTRATION_ENABLED: booleanFromString.default('true'),
-  DOCS_ENABLED: booleanFromString.default('true'),
+  // Default: on in development, off in production (the docs list every endpoint).
+  DOCS_ENABLED: booleanFromString.optional(),
+  // How many reverse proxies (Caddy, Nginx...) sit in front of the API. With one, set 1 so the
+  // rate limits see each client's real address instead of the proxy's. 0 = none (development).
+  TRUST_PROXY: z.coerce.number().int().min(0).max(5).default(0),
 });
 
 const parsed = schema.safeParse(process.env);
@@ -46,5 +50,6 @@ export const config = {
     refreshTtlDays: env.REFRESH_TOKEN_TTL_DAYS,
   },
   registrationEnabled: env.REGISTRATION_ENABLED,
-  docsEnabled: env.DOCS_ENABLED,
+  docsEnabled: env.DOCS_ENABLED ?? env.NODE_ENV !== 'production',
+  trustProxy: env.TRUST_PROXY,
 };

@@ -28,6 +28,8 @@ services:
     env_file: .env
     environment:
       NODE_ENV: production
+      # One reverse proxy (HTTPS) in front of the API.
+      TRUST_PROXY: ${TRUST_PROXY:-1}
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     ports:
       # Only reachable from the server itself: the reverse proxy forwards HTTPS traffic to it.

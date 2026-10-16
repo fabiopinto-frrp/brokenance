@@ -11,6 +11,8 @@ export function createApp() {
   const app = express();
 
   app.disable('x-powered-by');
+  // Behind a reverse proxy, req.ip (used by the rate limits) comes from X-Forwarded-For.
+  app.set('trust proxy', config.trustProxy);
   // This is an API consumed from other origins, so resources must not be restricted to same-origin.
   app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
   // Registered before the rate limiter and routes so preflight (OPTIONS) requests are answered first.
