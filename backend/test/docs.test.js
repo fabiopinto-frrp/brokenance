@@ -118,6 +118,14 @@ describe('GET /docs', () => {
   });
 });
 
+describe('DOCS_ENABLED default', () => {
+  it('is on outside production when DOCS_ENABLED is not set', async () => {
+    const { config } = await import('../src/config/index.js');
+    // The tests run with NODE_ENV=test and no DOCS_ENABLED.
+    expect(config.docsEnabled).toBe(true);
+  });
+});
+
 describe('DOCS_ENABLED=false', () => {
   it('hides the documentation', async () => {
     config.docsEnabled = false;

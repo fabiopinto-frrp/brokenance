@@ -133,7 +133,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logoutConfirmTitle => 'Log out?';
 
   @override
-  String get logoutConfirmMessage => 'You\'ll need your username and password to log in again.';
+  String get logoutConfirmMessage =>
+      'You\'ll need your username and password to log in again.';
 
   @override
   String get cancel => 'Cancel';
@@ -164,7 +165,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileBalanceSetupButton => 'Set balance';
 
   @override
-  String get profileBalanceAdjustNote => 'The difference is saved in your history as an adjustment.';
+  String get profileBalanceAdjustNote =>
+      'The difference is saved in your history as an adjustment.';
 
   @override
   String get profileIncomeTitle => 'Monthly income';
@@ -189,7 +191,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileChangePassword => 'Change password';
 
   @override
-  String get profileChangePasswordNote => 'Your other devices will be logged out.';
+  String get profileChangePasswordNote =>
+      'Your other devices will be logged out.';
 
   @override
   String get profilePasswordChanged => 'Password changed';
@@ -243,7 +246,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expensesEmptyTitle => 'No expenses yet';
 
   @override
-  String get expensesEmptyMessage => 'Add what you spend, like groceries or bills.';
+  String get expensesEmptyMessage =>
+      'Add what you spend, like groceries or bills.';
 
   @override
   String get outingsEmptyTitle => 'No outings or holidays yet';
@@ -354,7 +358,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get savingsEdit => 'Edit savings target';
 
   @override
-  String get savingsNewNote => 'It becomes your current target. The previous one stays in the history.';
+  String get savingsNewNote =>
+      'It becomes your current target. The previous one stays in the history.';
 
   @override
   String get savingsCurrentLabel => 'You want to save per month';
@@ -374,7 +379,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get goalsEmptyTitle => 'No goals yet';
 
   @override
-  String get goalsEmptyMessage => 'Save for something: a laptop, a trip, a car.';
+  String get goalsEmptyMessage =>
+      'Save for something: a laptop, a trip, a car.';
 
   @override
   String get goalNew => 'New goal';
@@ -524,7 +530,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorTimeout => 'The server took too long to answer. Try again.';
 
   @override
-  String get errorSessionExpired => 'Your session has expired. Please log in again.';
+  String get errorSessionExpired =>
+      'Your session has expired. Please log in again.';
 
   @override
   String get errorUnknown => 'Something went wrong. Try again.';
@@ -536,10 +543,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorUsernameTaken => 'This username is already taken.';
 
   @override
-  String get errorRegistrationDisabled => 'Creating new accounts is turned off.';
+  String get errorRegistrationDisabled =>
+      'Creating new accounts is turned off.';
 
   @override
-  String get errorTooManyRequests => 'Too many attempts. Wait a few minutes and try again.';
+  String get errorTooManyRequests =>
+      'Too many attempts. Wait a few minutes and try again.';
 
   @override
   String get errorValidation => 'Some fields are not valid.';
