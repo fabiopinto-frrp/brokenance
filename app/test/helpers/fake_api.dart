@@ -11,13 +11,17 @@ class FakeApi implements HttpClientAdapter {
   final List<RequestOptions> requests = [];
 
   @override
-  Future<ResponseBody> fetch(RequestOptions options, Stream<Uint8List>? requestStream, Future<void>? cancelFuture) async {
+  Future<ResponseBody> fetch(
+    RequestOptions options,
+    Stream<Uint8List>? requestStream,
+    Future<void>? cancelFuture,
+  ) async {
     requests.add(options);
     // Lets concurrent requests overlap, like a real network.
     await Future<void>.delayed(const Duration(milliseconds: 5));
     final response = handler(options);
     return ResponseBody.fromString(
-      jsonEncode(response.body),
+      response.status == 204 ? '' : jsonEncode(response.body),
       response.status,
       headers: {
         Headers.contentTypeHeader: [Headers.jsonContentType],

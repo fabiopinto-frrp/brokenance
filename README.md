@@ -96,7 +96,7 @@ Instructions will be added once the app is built.
 - [x] Define requirements and structure
 - [x] Backend API and Docker setup (auth, profile, lists, subscriptions, dashboard)
 - [x] Scaffold the Flutter app: theme (light/dark), PT/EN translations, drawer and routes, API client
-- [ ] Authentication (login) and session handling
+- [x] Login, register, staying logged in, logout and session expiry
 - [ ] Profile (name, net worth, monthly income)
 - [ ] Lists with add/edit/delete
 - [ ] Dashboard with charts

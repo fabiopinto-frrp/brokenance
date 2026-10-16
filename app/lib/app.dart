@@ -9,6 +9,8 @@ import 'core/router/app_router.dart';
 import 'core/storage/app_preferences.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/theme_cubit.dart';
+import 'features/auth/bloc/auth_bloc.dart';
+import 'features/auth/data/auth_repository.dart';
 
 /// The root widget: provides the shared services and the app-wide blocs, then builds the app.
 class BrokenanceApp extends StatelessWidget {
@@ -20,11 +22,17 @@ class BrokenanceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-      providers: [RepositoryProvider.value(value: apiClient)],
+      providers: [
+        RepositoryProvider.value(value: apiClient),
+        RepositoryProvider(create: (_) => AuthRepository(apiClient)),
+      ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(create: (_) => ThemeCubit(preferences)),
           BlocProvider(create: (_) => LocaleCubit(preferences)),
+          BlocProvider(
+            create: (context) => AuthBloc(context.read<AuthRepository>())..add(const AuthStarted()),
+          ),
         ],
         child: const _AppView(),
       ),
@@ -41,7 +49,7 @@ class _AppView extends StatefulWidget {
 
 class _AppViewState extends State<_AppView> {
   // Created once, so rebuilding the app (theme or language change) keeps the current page.
-  late final GoRouter _router = createRouter();
+  late final GoRouter _router = createRouter(context.read<AuthBloc>());
 
   @override
   void dispose() {

@@ -73,19 +73,104 @@ class AppLocalizationsPt extends AppLocalizations {
   String get comingSoonMessage => 'Este ecrã está a ser construído.';
 
   @override
-  String get errorNetwork =>
-      'Não foi possível contactar o servidor. Verifica a tua ligação.';
+  String get loginSubtitle => 'Inicia sessão para continuar.';
 
   @override
-  String get errorTimeout =>
-      'O servidor demorou demasiado a responder. Tenta novamente.';
+  String get loginButton => 'Entrar';
 
   @override
-  String get errorSessionExpired =>
-      'A tua sessão expirou. Inicia sessão novamente.';
+  String get loginNoAccount => 'Ainda não tens conta?';
+
+  @override
+  String get loginCreateAccount => 'Criar conta';
+
+  @override
+  String get registerTitle => 'Criar conta';
+
+  @override
+  String get registerSubtitle => 'Demora só um minuto.';
+
+  @override
+  String get registerButton => 'Criar conta';
+
+  @override
+  String get registerHaveAccount => 'Já tens conta?';
+
+  @override
+  String get registerLogin => 'Entrar';
+
+  @override
+  String get fieldFirstName => 'Nome';
+
+  @override
+  String get fieldLastName => 'Apelido';
+
+  @override
+  String get fieldUsername => 'Nome de utilizador';
+
+  @override
+  String get fieldPassword => 'Palavra-passe';
+
+  @override
+  String get fieldConfirmPassword => 'Confirmar palavra-passe';
+
+  @override
+  String get passwordShow => 'Mostrar palavra-passe';
+
+  @override
+  String get passwordHide => 'Esconder palavra-passe';
+
+  @override
+  String get validationRequired => 'Obrigatório';
+
+  @override
+  String get validationUsername => '3 a 30 letras, números, . _ ou -';
+
+  @override
+  String get validationPasswordLength => 'Pelo menos 8 caracteres';
+
+  @override
+  String get validationPasswordsMatch => 'As palavras-passe não coincidem';
+
+  @override
+  String get logout => 'Terminar sessão';
+
+  @override
+  String get logoutConfirmTitle => 'Terminar sessão?';
+
+  @override
+  String get logoutConfirmMessage =>
+      'Vais precisar do nome de utilizador e da palavra-passe para voltar a entrar.';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get errorNetwork => 'Não foi possível contactar o servidor. Verifica a tua ligação.';
+
+  @override
+  String get errorTimeout => 'O servidor demorou demasiado a responder. Tenta novamente.';
+
+  @override
+  String get errorSessionExpired => 'A tua sessão expirou. Inicia sessão novamente.';
 
   @override
   String get errorUnknown => 'Algo correu mal. Tenta novamente.';
+
+  @override
+  String get errorInvalidCredentials => 'Nome de utilizador ou palavra-passe incorretos.';
+
+  @override
+  String get errorUsernameTaken => 'Este nome de utilizador já está a ser usado.';
+
+  @override
+  String get errorRegistrationDisabled => 'A criação de novas contas está desativada.';
+
+  @override
+  String get errorTooManyRequests => 'Demasiadas tentativas. Espera uns minutos e tenta novamente.';
+
+  @override
+  String get errorValidation => 'Alguns campos não são válidos.';
 
   @override
   String get retry => 'Tentar novamente';

@@ -1,6 +1,8 @@
 import 'package:material_ui/material_ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/auth/bloc/auth_bloc.dart';
 import '../l10n/l10n.dart';
 import '../router/app_destinations.dart';
 import '../theme/app_colors.dart';
@@ -17,6 +19,27 @@ class AppDrawer extends StatelessWidget {
     if (destination != current) context.go(destination.path);
   }
 
+  Future<void> _confirmLogout(BuildContext context) async {
+    final l10n = context.l10n;
+    final authBloc = context.read<AuthBloc>();
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(l10n.logoutConfirmTitle),
+        content: Text(l10n.logoutConfirmMessage),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(context).pop(false), child: Text(l10n.cancel)),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.error),
+            child: Text(l10n.logout),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) authBloc.add(const AuthLogoutRequested());
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -28,11 +51,7 @@ class AppDrawer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.xl, AppSpacing.xl, AppSpacing.xl, AppSpacing.lg),
-              // The user's name and net worth come here with the profile (next part).
-              child: Text(l10n.appTitle, style: theme.textTheme.headlineMedium),
-            ),
+            const _DrawerHeader(),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
@@ -49,14 +68,59 @@ class AppDrawer extends StatelessWidget {
             const Divider(indent: AppSpacing.xl, endIndent: AppSpacing.xl),
             Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
-              child: _DrawerItem(
-                destination: AppDestination.settings,
-                selected: current == AppDestination.settings,
-                onTap: () => _open(context, AppDestination.settings),
+              child: Column(
+                children: [
+                  _DrawerItem(
+                    destination: AppDestination.settings,
+                    selected: current == AppDestination.settings,
+                    onTap: () => _open(context, AppDestination.settings),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.logout_rounded, color: context.colors.textSecondary),
+                    title: Text(
+                      l10n.logout,
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: context.colors.textSecondary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    onTap: () => _confirmLogout(context),
+                  ),
+                ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// The user's name and username. The net worth joins it with the profile.
+class _DrawerHeader extends StatelessWidget {
+  const _DrawerHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final user = context.select((AuthBloc bloc) => bloc.state.user);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(AppSpacing.xl, AppSpacing.xl, AppSpacing.xl, AppSpacing.lg),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            user?.fullName ?? context.l10n.appTitle,
+            style: theme.textTheme.headlineMedium,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          if (user != null) ...[
+            const SizedBox(height: AppSpacing.xs),
+            Text('@${user.username}', style: theme.textTheme.bodyMedium),
+          ],
+        ],
       ),
     );
   }

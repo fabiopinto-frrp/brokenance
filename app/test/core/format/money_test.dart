@@ -36,7 +36,19 @@ void main() {
     });
 
     test('rejects what is not an amount', () {
-      for (final input in ['', 'abc', '12,345,6', '12.3456', '-5', '1e3', '€', '12,50x', '1,234,56', '12.34.5', '1.23,45']) {
+      for (final input in [
+        '',
+        'abc',
+        '12,345,6',
+        '12.3456',
+        '-5',
+        '1e3',
+        '€',
+        '12,50x',
+        '1,234,56',
+        '12.34.5',
+        '1.23,45',
+      ]) {
         expect(Money.parse(input), isNull, reason: input);
       }
     });
