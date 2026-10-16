@@ -34,6 +34,7 @@ class FormSheet extends StatefulWidget {
     required this.onSave,
     this.note,
     this.saveLabel,
+    this.onDelete,
   });
 
   final String title;
@@ -43,6 +44,10 @@ class FormSheet extends StatefulWidget {
   /// The inputs. `submit` sends the form (for the keyboard's "done" button).
   final List<Widget> Function(VoidCallback submit) fields;
   final Future<void> Function() onSave;
+
+  /// When set, a "Delete" button is shown. The sheet closes first, then this runs (it usually
+  /// calls `deleteWithUndo` with the screen's context).
+  final VoidCallback? onDelete;
 
   @override
   State<FormSheet> createState() => _FormSheetState();
@@ -115,6 +120,18 @@ class _FormSheetState extends State<FormSheet> {
                       : Text(widget.saveLabel ?? l10n.save),
                 ),
               ),
+              if (widget.onDelete != null) ...[
+                const SizedBox(height: AppSpacing.sm),
+                TextButton.icon(
+                  style: TextButton.styleFrom(foregroundColor: theme.colorScheme.error),
+                  icon: const Icon(Icons.delete_outline_rounded),
+                  label: Text(l10n.delete),
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                    widget.onDelete!();
+                  },
+                ),
+              ],
             ],
           ),
         ),

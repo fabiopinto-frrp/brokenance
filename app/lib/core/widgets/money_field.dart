@@ -15,6 +15,7 @@ class MoneyField extends StatelessWidget {
     required this.label,
     this.allowNegative = false,
     this.allowZero = false,
+    this.optional = false,
     this.autofocus = false,
     this.textInputAction = TextInputAction.done,
     this.onSubmitted,
@@ -24,6 +25,9 @@ class MoneyField extends StatelessWidget {
   final String label;
   final bool allowNegative;
   final bool allowZero;
+
+  /// When true the field can be left empty ([valueOf] then gives null).
+  final bool optional;
   final bool autofocus;
   final TextInputAction textInputAction;
   final ValueChanged<String>? onSubmitted;
@@ -48,7 +52,7 @@ class MoneyField extends StatelessWidget {
       decoration: InputDecoration(labelText: label, suffixText: '€'),
       validator: (value) {
         final cents = Money.parseSigned(value ?? '');
-        if (value == null || value.trim().isEmpty) return l10n.validationRequired;
+        if (value == null || value.trim().isEmpty) return optional ? null : l10n.validationRequired;
         if (cents == null || (!allowNegative && cents < 0)) return l10n.validationAmount;
         if (cents == 0 && !allowZero) return l10n.validationAmount;
         if (cents.abs() > maxAmountCents) return l10n.validationAmountTooLarge;

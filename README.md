@@ -98,6 +98,6 @@ Instructions will be added once the app is built.
 - [x] Scaffold the Flutter app: theme (light/dark), PT/EN translations, drawer and routes, API client
 - [x] Login, register, staying logged in, logout and session expiry
 - [x] Profile: balance, monthly income, name, change password
-- [ ] Lists with add/edit/delete
+- [x] Lists with add/edit/delete: Despesas, Saídas/Férias, Lazer, Subscrições, Poupança, Objetivos
 - [ ] Dashboard with charts
 - [ ] Connect the app to the API

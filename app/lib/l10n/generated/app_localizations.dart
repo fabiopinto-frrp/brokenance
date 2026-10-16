@@ -62,7 +62,8 @@ import 'app_localizations_pt.dart';
 /// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
 abstract class AppLocalizations {
-  AppLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  AppLocalizations(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -70,7 +71,8 @@ abstract class AppLocalizations {
     return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<AppLocalizations> delegate = _AppLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -82,15 +84,19 @@ abstract class AppLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
-    delegate,
-    GlobalMaterialLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-  ];
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+        delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('pt')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('pt'),
+  ];
 
   /// No description provided for @appTitle.
   ///
@@ -506,6 +512,384 @@ abstract class AppLocalizations {
   /// **'The amount is too large'**
   String get validationAmountTooLarge;
 
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @deleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Deleted'**
+  String get deleted;
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// No description provided for @clear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get clear;
+
+  /// No description provided for @fieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get fieldName;
+
+  /// No description provided for @fieldDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get fieldDate;
+
+  /// No description provided for @fieldNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note (optional)'**
+  String get fieldNote;
+
+  /// No description provided for @transactionsThisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent this month'**
+  String get transactionsThisMonth;
+
+  /// No description provided for @expensesEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses yet'**
+  String get expensesEmptyTitle;
+
+  /// No description provided for @expensesEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add what you spend, like groceries or bills.'**
+  String get expensesEmptyMessage;
+
+  /// No description provided for @outingsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No outings or holidays yet'**
+  String get outingsEmptyTitle;
+
+  /// No description provided for @outingsEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add dinners out, trips and holidays.'**
+  String get outingsEmptyMessage;
+
+  /// No description provided for @leisureEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No leisure yet'**
+  String get leisureEmptyTitle;
+
+  /// No description provided for @leisureEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add cinema, games, hobbies and the like.'**
+  String get leisureEmptyMessage;
+
+  /// No description provided for @expenseNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New expense'**
+  String get expenseNew;
+
+  /// No description provided for @expenseEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit expense'**
+  String get expenseEdit;
+
+  /// No description provided for @outingNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New outing'**
+  String get outingNew;
+
+  /// No description provided for @outingEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit outing'**
+  String get outingEdit;
+
+  /// No description provided for @leisureNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New leisure'**
+  String get leisureNew;
+
+  /// No description provided for @leisureEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit leisure'**
+  String get leisureEdit;
+
+  /// No description provided for @subscriptionsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No subscriptions yet'**
+  String get subscriptionsEmptyTitle;
+
+  /// No description provided for @subscriptionsEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the gym, Netflix or your insurance. They are charged automatically on their day.'**
+  String get subscriptionsEmptyMessage;
+
+  /// No description provided for @subscriptionNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New subscription'**
+  String get subscriptionNew;
+
+  /// No description provided for @subscriptionEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit subscription'**
+  String get subscriptionEdit;
+
+  /// No description provided for @subscriptionsPerMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Per month, on average'**
+  String get subscriptionsPerMonth;
+
+  /// No description provided for @subscriptionsMonthlyTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly: {amount}'**
+  String subscriptionsMonthlyTotal(String amount);
+
+  /// No description provided for @subscriptionsYearlyTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly: {amount}'**
+  String subscriptionsYearlyTotal(String amount);
+
+  /// No description provided for @periodMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get periodMonthly;
+
+  /// No description provided for @periodYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get periodYearly;
+
+  /// No description provided for @fieldBillingDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day of the month'**
+  String get fieldBillingDay;
+
+  /// No description provided for @fieldBillingMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get fieldBillingMonth;
+
+  /// No description provided for @subscriptionEveryMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Every month on day {day}'**
+  String subscriptionEveryMonth(int day);
+
+  /// No description provided for @subscriptionEveryYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Every year on {date}'**
+  String subscriptionEveryYear(String date);
+
+  /// No description provided for @subscriptionNextCharge.
+  ///
+  /// In en, this message translates to:
+  /// **'Next charge: {date}'**
+  String subscriptionNextCharge(String date);
+
+  /// No description provided for @subscriptionPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get subscriptionPaused;
+
+  /// No description provided for @subscriptionActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get subscriptionActive;
+
+  /// No description provided for @subscriptionShortMonthNote.
+  ///
+  /// In en, this message translates to:
+  /// **'In months without that day, it is charged on the last day of the month. If the date is today, it is charged right away.'**
+  String get subscriptionShortMonthNote;
+
+  /// No description provided for @validationDayInMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'That month doesn\'t have this day'**
+  String get validationDayInMonth;
+
+  /// No description provided for @savingsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No savings target yet'**
+  String get savingsEmptyTitle;
+
+  /// No description provided for @savingsEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Set how much you want to save per month.'**
+  String get savingsEmptyMessage;
+
+  /// No description provided for @savingsNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New savings target'**
+  String get savingsNew;
+
+  /// No description provided for @savingsEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit savings target'**
+  String get savingsEdit;
+
+  /// No description provided for @savingsNewNote.
+  ///
+  /// In en, this message translates to:
+  /// **'It becomes your current target. The previous one stays in the history.'**
+  String get savingsNewNote;
+
+  /// No description provided for @savingsCurrentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'You want to save per month'**
+  String get savingsCurrentLabel;
+
+  /// No description provided for @savingsSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Since {date}'**
+  String savingsSince(String date);
+
+  /// No description provided for @savingsHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get savingsHistory;
+
+  /// No description provided for @fieldEffectiveDate.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get fieldEffectiveDate;
+
+  /// No description provided for @goalsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No goals yet'**
+  String get goalsEmptyTitle;
+
+  /// No description provided for @goalsEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Save for something: a laptop, a trip, a car.'**
+  String get goalsEmptyMessage;
+
+  /// No description provided for @goalNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New goal'**
+  String get goalNew;
+
+  /// No description provided for @goalEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit goal'**
+  String get goalEdit;
+
+  /// No description provided for @fieldGoalName.
+  ///
+  /// In en, this message translates to:
+  /// **'What are you saving for?'**
+  String get fieldGoalName;
+
+  /// No description provided for @fieldTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Target amount'**
+  String get fieldTarget;
+
+  /// No description provided for @fieldSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Already saved'**
+  String get fieldSaved;
+
+  /// No description provided for @fieldDeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Deadline (optional)'**
+  String get fieldDeadline;
+
+  /// No description provided for @goalProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{saved} of {target}'**
+  String goalProgress(String saved, String target);
+
+  /// No description provided for @goalRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} to go'**
+  String goalRemaining(String amount);
+
+  /// No description provided for @goalCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get goalCompleted;
+
+  /// No description provided for @goalMonthsLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{About 1 month at your savings target} other{About {count} months at your savings target}}'**
+  String goalMonthsLeft(int count);
+
+  /// No description provided for @goalDeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'By {date}'**
+  String goalDeadline(String date);
+
+  /// No description provided for @goalAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to {name}'**
+  String goalAddTitle(String name);
+
+  /// No description provided for @goalAddNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved so far: {amount}'**
+  String goalAddNote(String amount);
+
   /// No description provided for @errorNetwork.
   ///
   /// In en, this message translates to:
@@ -573,7 +957,8 @@ abstract class AppLocalizations {
   String get retry;
 }
 
-class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
@@ -582,7 +967,8 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'pt'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en', 'pt'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

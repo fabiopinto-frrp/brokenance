@@ -156,6 +156,23 @@ abstract final class AppTheme {
         ),
       ),
       dividerTheme: DividerThemeData(color: colors.border, thickness: 1, space: 1),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: scheme.primary,
+        foregroundColor: scheme.onPrimary,
+        elevation: 2,
+        highlightElevation: 4,
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(AppRadius.lg))),
+        extendedTextStyle: textTheme.labelLarge,
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: scheme.surface,
+        surfaceTintColor: Colors.transparent,
+        dragHandleColor: colors.border,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
+        ),
+      ),
+      switchTheme: SwitchThemeData(trackOutlineColor: WidgetStateProperty.all(Colors.transparent)),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         backgroundColor: scheme.onSurface,

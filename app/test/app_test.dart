@@ -51,7 +51,7 @@ void main() {
     expect((await SharedPreferences.getInstance()).getString('locale'), 'pt');
 
     await openDrawerAndTap(tester, 'Despesas');
-    expect(find.text('Em breve'), findsOneWidget);
+    expect(find.text('Ainda sem despesas'), findsOneWidget);
   });
 
   testWidgets('switches to dark mode and keeps the page', (tester) async {

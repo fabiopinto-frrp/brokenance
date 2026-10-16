@@ -107,6 +107,8 @@ class FakeBackend {
           ..netWorthSet = true;
         return FakeResponse(200, _profile(username));
     }
+    final listResponse = _lists(username, request, body);
+    if (listResponse != null) return listResponse;
     return const FakeResponse(200, {});
   }
 
@@ -126,6 +128,198 @@ class FakeBackend {
   ({int income, int netWorth, bool netWorthSet}) moneyOf(String username) {
     final money = _money(username);
     return (income: money.income, netWorth: money.netWorth, netWorthSet: money.netWorthSet);
+  }
+
+  // ---------- Lists: a simplified copy of the API's rules ----------
+
+  final Map<String, List<Map<String, dynamic>>> _transactions = {};
+  final Map<String, List<Map<String, dynamic>>> _subscriptions = {};
+  final Map<String, List<Map<String, dynamic>>> _savings = {};
+  final Map<String, List<Map<String, dynamic>>> _goals = {};
+
+  /// "Today" for the fake API: the same day as the device, like the real API in Lisbon.
+  String today = DateTime.now().toIso8601String().substring(0, 10);
+
+  List<Map<String, dynamic>> transactionsOf(String username) => _transactions.putIfAbsent(username, () => []);
+  List<Map<String, dynamic>> subscriptionsOf(String username) =>
+      _subscriptions.putIfAbsent(username, () => []);
+  List<Map<String, dynamic>> savingsOf(String username) => _savings.putIfAbsent(username, () => []);
+  List<Map<String, dynamic>> goalsOf(String username) => _goals.putIfAbsent(username, () => []);
+
+  FakeResponse? _lists(String username, RequestOptions request, Map<String, dynamic> body) {
+    final segments = request.path.split('/').where((segment) => segment.isNotEmpty).toList();
+    final collection = segments.isEmpty ? '' : segments.first;
+    final id = segments.length > 1 ? segments[1] : null;
+    final method = request.method;
+
+    switch (collection) {
+      case 'transactions':
+        return _crud(
+          transactionsOf(username),
+          method,
+          id,
+          body,
+          list: () {
+            final query = request.queryParameters;
+            final types = (query['type'] as String?)?.split(',');
+            var items = transactionsOf(username).where((item) {
+              final date = item['date'] as String;
+              return (types == null || types.contains(item['type'])) &&
+                  (query['from'] == null || date.compareTo(query['from'] as String) >= 0) &&
+                  (query['to'] == null || date.compareTo(query['to'] as String) <= 0);
+            }).toList()..sort((a, b) => (b['date'] as String).compareTo(a['date'] as String));
+            final total = items.length;
+            items = items.take(int.parse('${query['limit'] ?? 100}')).toList();
+            return {'items': items, 'total': total};
+          },
+          toItem: (body, existing) {
+            final date = (body['date'] as String?) ?? today;
+            if (date.compareTo(today) > 0) throw FakeResponse.error(400, 'date_in_future');
+            final amount = -(body['amountCents'] as int);
+            _money(username).netWorth += amount - ((existing?['amountCents'] as int?) ?? 0);
+            return {
+              'type': body['type'],
+              'name': body['name'],
+              'amountCents': amount,
+              'date': date,
+              'note': body['note'],
+            };
+          },
+          onDelete: (item) => _money(username).netWorth -= item['amountCents'] as int,
+        );
+      case 'subscriptions':
+        return _crud(
+          subscriptionsOf(username),
+          method,
+          id,
+          body,
+          list: () {
+            final items = subscriptionsOf(username);
+            int sum(String period) => items
+                .where((item) => item['active'] == true && item['period'] == period)
+                .fold(0, (total, item) => total + (item['amountCents'] as int));
+            return {
+              'items': [
+                for (final item in items) {...item, 'nextChargeDate': _nextCharge(item)},
+              ],
+              'monthlyTotalCents': sum('monthly'),
+              'yearlyTotalCents': sum('yearly'),
+              'averagePerMonthCents': sum('monthly') + (sum('yearly') / 12).round(),
+            };
+          },
+          toItem: (body, existing) => {
+            'name': body['name'],
+            'amountCents': body['amountCents'],
+            'period': body['period'] ?? 'monthly',
+            'billingDay': body['billingDay'],
+            'billingMonth': body['period'] == 'yearly' ? body['billingMonth'] : null,
+            'active': body['active'] ?? true,
+          },
+        );
+      case 'savings-targets':
+        return _crud(
+          savingsOf(username),
+          method,
+          id,
+          body,
+          list: () {
+            final items = [...savingsOf(username)]
+              ..sort((a, b) => (b['effectiveDate'] as String).compareTo(a['effectiveDate'] as String));
+            return {
+              'items': [
+                for (final (index, item) in items.indexed) {...item, 'isCurrent': index == 0},
+              ],
+            };
+          },
+          toItem: (body, existing) {
+            final date = (body['effectiveDate'] as String?) ?? today;
+            if (date.compareTo(today) > 0) throw FakeResponse.error(400, 'date_in_future');
+            return {'amountCents': body['amountCents'], 'effectiveDate': date};
+          },
+        );
+      case 'goals':
+        if (method == 'POST' && segments.length == 3 && segments[2] == 'contributions') {
+          final goal = goalsOf(username).where((item) => item['id'] == id).firstOrNull;
+          if (goal == null) return FakeResponse.error(404, 'goal_not_found');
+          goal['savedCents'] = (goal['savedCents'] as int) + (body['amountCents'] as int);
+          return FakeResponse(200, {'goal': _goalView(username, goal)});
+        }
+        return _crud(
+          goalsOf(username),
+          method,
+          id,
+          body,
+          list: () => {
+            'items': [for (final goal in goalsOf(username)) _goalView(username, goal)],
+          },
+          toItem: (body, existing) => {
+            'name': body['name'],
+            'targetCents': body['targetCents'],
+            'savedCents': body['savedCents'] ?? 0,
+            'deadline': body['deadline'],
+          },
+        );
+    }
+    return null;
+  }
+
+  FakeResponse _crud(
+    List<Map<String, dynamic>> items,
+    String method,
+    String? id,
+    Map<String, dynamic> body, {
+    required Map<String, dynamic> Function() list,
+    required Map<String, dynamic> Function(Map<String, dynamic> body, Map<String, dynamic>? existing) toItem,
+    void Function(Map<String, dynamic> item)? onDelete,
+  }) {
+    try {
+      if (method == 'GET') return FakeResponse(200, list());
+      if (method == 'POST') {
+        final item = {'id': 'item-${++_counter}', ...toItem(body, null)};
+        items.add(item);
+        return FakeResponse(201, {'item': item});
+      }
+      final existing = items.where((item) => item['id'] == id).firstOrNull;
+      if (existing == null) return FakeResponse.error(404, 'not_found');
+      if (method == 'PUT') {
+        existing.addAll(toItem(body, existing));
+        return FakeResponse(200, {'item': existing});
+      }
+      if (method == 'DELETE') {
+        items.remove(existing);
+        onDelete?.call(existing);
+        return const FakeResponse(204);
+      }
+    } on FakeResponse catch (error) {
+      return error;
+    }
+    return FakeResponse.error(405, 'method_not_allowed');
+  }
+
+  String? _nextCharge(Map<String, dynamic> subscription) {
+    if (subscription['active'] != true) return null;
+    final now = DateTime.parse(today);
+    final day = subscription['billingDay'] as int;
+    final month = (subscription['billingMonth'] as int?) ?? (day >= now.day ? now.month : now.month + 1);
+    var date = DateTime(now.year, month, day);
+    if (date.isBefore(now)) date = DateTime(now.year + 1, month, day);
+    return '${date.year}-${'${date.month}'.padLeft(2, '0')}-${'${date.day}'.padLeft(2, '0')}';
+  }
+
+  Map<String, dynamic> _goalView(String username, Map<String, dynamic> goal) {
+    final target = goal['targetCents'] as int;
+    final saved = goal['savedCents'] as int;
+    final remaining = (target - saved).clamp(0, target);
+    final savings = [...savingsOf(username)]
+      ..sort((a, b) => (b['effectiveDate'] as String).compareTo(a['effectiveDate'] as String));
+    final perMonth = savings.isEmpty ? null : savings.first['amountCents'] as int;
+    return {
+      ...goal,
+      'remainingCents': remaining,
+      'progressPercent': saved * 100 ~/ target,
+      'completed': remaining == 0,
+      'estimatedMonthsLeft': remaining == 0 ? 0 : (perMonth == null ? null : (remaining / perMonth).ceil()),
+    };
   }
 
   Map<String, dynamic> _profile(String username) {

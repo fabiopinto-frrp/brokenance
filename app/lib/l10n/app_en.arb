@@ -69,6 +69,156 @@
   "fieldConfirmNewPassword": "Confirm new password",
   "validationAmount": "Enter a valid amount, like 12.50",
   "validationAmountTooLarge": "The amount is too large",
+  "add": "Add",
+  "delete": "Delete",
+  "deleted": "Deleted",
+  "undo": "Undo",
+  "clear": "Clear",
+  "fieldName": "Name",
+  "fieldDate": "Date",
+  "fieldNote": "Note (optional)",
+  "transactionsThisMonth": "Spent this month",
+  "expensesEmptyTitle": "No expenses yet",
+  "expensesEmptyMessage": "Add what you spend, like groceries or bills.",
+  "outingsEmptyTitle": "No outings or holidays yet",
+  "outingsEmptyMessage": "Add dinners out, trips and holidays.",
+  "leisureEmptyTitle": "No leisure yet",
+  "leisureEmptyMessage": "Add cinema, games, hobbies and the like.",
+  "expenseNew": "New expense",
+  "expenseEdit": "Edit expense",
+  "outingNew": "New outing",
+  "outingEdit": "Edit outing",
+  "leisureNew": "New leisure",
+  "leisureEdit": "Edit leisure",
+  "subscriptionsEmptyTitle": "No subscriptions yet",
+  "subscriptionsEmptyMessage": "Add the gym, Netflix or your insurance. They are charged automatically on their day.",
+  "subscriptionNew": "New subscription",
+  "subscriptionEdit": "Edit subscription",
+  "subscriptionsPerMonth": "Per month, on average",
+  "subscriptionsMonthlyTotal": "Monthly: {amount}",
+  "@subscriptionsMonthlyTotal": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionsYearlyTotal": "Yearly: {amount}",
+  "@subscriptionsYearlyTotal": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "periodMonthly": "Monthly",
+  "periodYearly": "Yearly",
+  "fieldBillingDay": "Day of the month",
+  "fieldBillingMonth": "Month",
+  "subscriptionEveryMonth": "Every month on day {day}",
+  "@subscriptionEveryMonth": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      }
+    }
+  },
+  "subscriptionEveryYear": "Every year on {date}",
+  "@subscriptionEveryYear": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionNextCharge": "Next charge: {date}",
+  "@subscriptionNextCharge": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "subscriptionPaused": "Paused",
+  "subscriptionActive": "Active",
+  "subscriptionShortMonthNote": "In months without that day, it is charged on the last day of the month. If the date is today, it is charged right away.",
+  "validationDayInMonth": "That month doesn't have this day",
+  "savingsEmptyTitle": "No savings target yet",
+  "savingsEmptyMessage": "Set how much you want to save per month.",
+  "savingsNew": "New savings target",
+  "savingsEdit": "Edit savings target",
+  "savingsNewNote": "It becomes your current target. The previous one stays in the history.",
+  "savingsCurrentLabel": "You want to save per month",
+  "savingsSince": "Since {date}",
+  "@savingsSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "savingsHistory": "History",
+  "fieldEffectiveDate": "From",
+  "goalsEmptyTitle": "No goals yet",
+  "goalsEmptyMessage": "Save for something: a laptop, a trip, a car.",
+  "goalNew": "New goal",
+  "goalEdit": "Edit goal",
+  "fieldGoalName": "What are you saving for?",
+  "fieldTarget": "Target amount",
+  "fieldSaved": "Already saved",
+  "fieldDeadline": "Deadline (optional)",
+  "goalProgress": "{saved} of {target}",
+  "@goalProgress": {
+    "placeholders": {
+      "saved": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "goalRemaining": "{amount} to go",
+  "@goalRemaining": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalCompleted": "Completed",
+  "goalMonthsLeft": "{count, plural, =1{About 1 month at your savings target} other{About {count} months at your savings target}}",
+  "@goalMonthsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalDeadline": "By {date}",
+  "@goalDeadline": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "goalAddTitle": "Add to {name}",
+  "@goalAddTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "goalAddNote": "Saved so far: {amount}",
+  "@goalAddNote": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "errorNetwork": "Can't reach the server. Check your connection.",
   "errorTimeout": "The server took too long to answer. Try again.",
   "errorSessionExpired": "Your session has expired. Please log in again.",

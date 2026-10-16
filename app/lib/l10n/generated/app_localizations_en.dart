@@ -139,7 +139,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get logoutConfirmTitle => 'Log out?';
 
   @override
-  String get logoutConfirmMessage => 'You\'ll need your username and password to log in again.';
+  String get logoutConfirmMessage =>
+      'You\'ll need your username and password to log in again.';
 
   @override
   String get cancel => 'Cancel';
@@ -170,7 +171,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileBalanceSetupButton => 'Set balance';
 
   @override
-  String get profileBalanceAdjustNote => 'The difference is saved in your history as an adjustment.';
+  String get profileBalanceAdjustNote =>
+      'The difference is saved in your history as an adjustment.';
 
   @override
   String get profileIncomeTitle => 'Monthly income';
@@ -195,7 +197,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileChangePassword => 'Change password';
 
   @override
-  String get profileChangePasswordNote => 'Your other devices will be logged out.';
+  String get profileChangePasswordNote =>
+      'Your other devices will be logged out.';
 
   @override
   String get profilePasswordChanged => 'Password changed';
@@ -219,13 +222,238 @@ class AppLocalizationsEn extends AppLocalizations {
   String get validationAmountTooLarge => 'The amount is too large';
 
   @override
+  String get add => 'Add';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleted => 'Deleted';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String get clear => 'Clear';
+
+  @override
+  String get fieldName => 'Name';
+
+  @override
+  String get fieldDate => 'Date';
+
+  @override
+  String get fieldNote => 'Note (optional)';
+
+  @override
+  String get transactionsThisMonth => 'Spent this month';
+
+  @override
+  String get expensesEmptyTitle => 'No expenses yet';
+
+  @override
+  String get expensesEmptyMessage =>
+      'Add what you spend, like groceries or bills.';
+
+  @override
+  String get outingsEmptyTitle => 'No outings or holidays yet';
+
+  @override
+  String get outingsEmptyMessage => 'Add dinners out, trips and holidays.';
+
+  @override
+  String get leisureEmptyTitle => 'No leisure yet';
+
+  @override
+  String get leisureEmptyMessage => 'Add cinema, games, hobbies and the like.';
+
+  @override
+  String get expenseNew => 'New expense';
+
+  @override
+  String get expenseEdit => 'Edit expense';
+
+  @override
+  String get outingNew => 'New outing';
+
+  @override
+  String get outingEdit => 'Edit outing';
+
+  @override
+  String get leisureNew => 'New leisure';
+
+  @override
+  String get leisureEdit => 'Edit leisure';
+
+  @override
+  String get subscriptionsEmptyTitle => 'No subscriptions yet';
+
+  @override
+  String get subscriptionsEmptyMessage =>
+      'Add the gym, Netflix or your insurance. They are charged automatically on their day.';
+
+  @override
+  String get subscriptionNew => 'New subscription';
+
+  @override
+  String get subscriptionEdit => 'Edit subscription';
+
+  @override
+  String get subscriptionsPerMonth => 'Per month, on average';
+
+  @override
+  String subscriptionsMonthlyTotal(String amount) {
+    return 'Monthly: $amount';
+  }
+
+  @override
+  String subscriptionsYearlyTotal(String amount) {
+    return 'Yearly: $amount';
+  }
+
+  @override
+  String get periodMonthly => 'Monthly';
+
+  @override
+  String get periodYearly => 'Yearly';
+
+  @override
+  String get fieldBillingDay => 'Day of the month';
+
+  @override
+  String get fieldBillingMonth => 'Month';
+
+  @override
+  String subscriptionEveryMonth(int day) {
+    return 'Every month on day $day';
+  }
+
+  @override
+  String subscriptionEveryYear(String date) {
+    return 'Every year on $date';
+  }
+
+  @override
+  String subscriptionNextCharge(String date) {
+    return 'Next charge: $date';
+  }
+
+  @override
+  String get subscriptionPaused => 'Paused';
+
+  @override
+  String get subscriptionActive => 'Active';
+
+  @override
+  String get subscriptionShortMonthNote =>
+      'In months without that day, it is charged on the last day of the month. If the date is today, it is charged right away.';
+
+  @override
+  String get validationDayInMonth => 'That month doesn\'t have this day';
+
+  @override
+  String get savingsEmptyTitle => 'No savings target yet';
+
+  @override
+  String get savingsEmptyMessage => 'Set how much you want to save per month.';
+
+  @override
+  String get savingsNew => 'New savings target';
+
+  @override
+  String get savingsEdit => 'Edit savings target';
+
+  @override
+  String get savingsNewNote =>
+      'It becomes your current target. The previous one stays in the history.';
+
+  @override
+  String get savingsCurrentLabel => 'You want to save per month';
+
+  @override
+  String savingsSince(String date) {
+    return 'Since $date';
+  }
+
+  @override
+  String get savingsHistory => 'History';
+
+  @override
+  String get fieldEffectiveDate => 'From';
+
+  @override
+  String get goalsEmptyTitle => 'No goals yet';
+
+  @override
+  String get goalsEmptyMessage =>
+      'Save for something: a laptop, a trip, a car.';
+
+  @override
+  String get goalNew => 'New goal';
+
+  @override
+  String get goalEdit => 'Edit goal';
+
+  @override
+  String get fieldGoalName => 'What are you saving for?';
+
+  @override
+  String get fieldTarget => 'Target amount';
+
+  @override
+  String get fieldSaved => 'Already saved';
+
+  @override
+  String get fieldDeadline => 'Deadline (optional)';
+
+  @override
+  String goalProgress(String saved, String target) {
+    return '$saved of $target';
+  }
+
+  @override
+  String goalRemaining(String amount) {
+    return '$amount to go';
+  }
+
+  @override
+  String get goalCompleted => 'Completed';
+
+  @override
+  String goalMonthsLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'About $count months at your savings target',
+      one: 'About 1 month at your savings target',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String goalDeadline(String date) {
+    return 'By $date';
+  }
+
+  @override
+  String goalAddTitle(String name) {
+    return 'Add to $name';
+  }
+
+  @override
+  String goalAddNote(String amount) {
+    return 'Saved so far: $amount';
+  }
+
+  @override
   String get errorNetwork => 'Can\'t reach the server. Check your connection.';
 
   @override
   String get errorTimeout => 'The server took too long to answer. Try again.';
 
   @override
-  String get errorSessionExpired => 'Your session has expired. Please log in again.';
+  String get errorSessionExpired =>
+      'Your session has expired. Please log in again.';
 
   @override
   String get errorUnknown => 'Something went wrong. Try again.';
@@ -237,10 +465,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get errorUsernameTaken => 'This username is already taken.';
 
   @override
-  String get errorRegistrationDisabled => 'Creating new accounts is turned off.';
+  String get errorRegistrationDisabled =>
+      'Creating new accounts is turned off.';
 
   @override
-  String get errorTooManyRequests => 'Too many attempts. Wait a few minutes and try again.';
+  String get errorTooManyRequests =>
+      'Too many attempts. Wait a few minutes and try again.';
 
   @override
   String get errorValidation => 'Some fields are not valid.';

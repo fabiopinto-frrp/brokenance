@@ -35,7 +35,7 @@ class FakeApi implements HttpClientAdapter {
   void close({bool force = false}) {}
 }
 
-class FakeResponse {
+class FakeResponse implements Exception {
   const FakeResponse(this.status, [this.body = const {}]);
 
   final int status;

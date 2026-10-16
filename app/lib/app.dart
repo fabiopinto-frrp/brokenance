@@ -12,7 +12,11 @@ import 'core/theme/theme_cubit.dart';
 import 'features/auth/bloc/auth_bloc.dart';
 import 'features/auth/data/auth_repository.dart';
 import 'features/profile/bloc/profile_cubit.dart';
+import 'features/goals/data/goal_repository.dart';
 import 'features/profile/data/profile_repository.dart';
+import 'features/savings/data/savings_repository.dart';
+import 'features/subscriptions/data/subscription_repository.dart';
+import 'features/transactions/data/transaction_repository.dart';
 
 /// The root widget: provides the shared services and the app-wide blocs, then builds the app.
 class BrokenanceApp extends StatelessWidget {
@@ -28,6 +32,10 @@ class BrokenanceApp extends StatelessWidget {
         RepositoryProvider.value(value: apiClient),
         RepositoryProvider(create: (_) => AuthRepository(apiClient)),
         RepositoryProvider(create: (_) => ProfileRepository(apiClient)),
+        RepositoryProvider(create: (_) => TransactionRepository(apiClient)),
+        RepositoryProvider(create: (_) => SubscriptionRepository(apiClient)),
+        RepositoryProvider(create: (_) => SavingsRepository(apiClient)),
+        RepositoryProvider(create: (_) => GoalRepository(apiClient)),
       ],
       child: MultiBlocProvider(
         providers: [
