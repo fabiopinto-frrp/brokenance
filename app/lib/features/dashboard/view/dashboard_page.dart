@@ -8,7 +8,7 @@ import '../../../core/list/list_page.dart';
 import '../../../core/router/app_destinations.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_tokens.dart';
-import '../../../core/widgets/animated_money.dart';
+import '../../../core/privacy/balance_visibility.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../goals/data/goal.dart';
 import '../../profile/bloc/profile_cubit.dart';
@@ -145,16 +145,22 @@ class _BalanceHero extends StatelessWidget {
     final colors = context.colors;
     final change = summary.changeSinceLastMonth;
     final locale = Localizations.localeOf(context);
+    final hidden = context.watch<BalanceVisibilityCubit>().state;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.xs, AppSpacing.sm, AppSpacing.xs, AppSpacing.sm),
+      padding: const EdgeInsets.fromLTRB(AppSpacing.xs, 0, AppSpacing.xs, AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(context.l10n.profileBalanceTitle, style: theme.textTheme.labelMedium),
-          const SizedBox(height: AppSpacing.xs),
-          AnimatedMoney(cents: summary.netWorthCents, style: theme.textTheme.displayLarge),
-          if (change != null && change != 0) ...[
+          Row(
+            children: [
+              Text(context.l10n.profileBalanceTitle, style: theme.textTheme.labelMedium),
+              const BalanceVisibilityButton(),
+            ],
+          ),
+          BalanceText(cents: summary.netWorthCents, style: theme.textTheme.displayLarge),
+          // The change would give the balance away, so it is hidden with it.
+          if (change != null && change != 0 && !hidden) ...[
             const SizedBox(height: AppSpacing.xs),
             Row(
               children: [

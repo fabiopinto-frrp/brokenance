@@ -5,7 +5,7 @@ import '../../../core/format/money.dart';
 import '../../../core/l10n/l10n.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_tokens.dart';
-import '../../../core/widgets/animated_money.dart';
+import '../../../core/privacy/balance_visibility.dart';
 import '../../../core/widgets/error_view.dart';
 import '../../../core/widgets/section_title.dart';
 import '../bloc/profile_cubit.dart';
@@ -86,11 +86,12 @@ class _BalanceCard extends StatelessWidget {
               Row(
                 children: [
                   Expanded(child: Text(context.l10n.profileBalanceTitle, style: theme.textTheme.labelMedium)),
+                  const BalanceVisibilityButton(size: 18),
                   Icon(Icons.edit_outlined, size: 18, color: context.colors.textSecondary),
                 ],
               ),
               const SizedBox(height: AppSpacing.sm),
-              AnimatedMoney(cents: profile.netWorthCents, style: theme.textTheme.displayMedium),
+              BalanceText(cents: profile.netWorthCents, style: theme.textTheme.displayMedium),
             ],
           ),
         ),

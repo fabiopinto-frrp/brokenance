@@ -152,6 +152,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get profileBalanceTitle => 'Saldo atual';
 
   @override
+  String get balanceShow => 'Mostrar saldo';
+
+  @override
+  String get balanceHide => 'Esconder saldo';
+
+  @override
+  String get balanceHidden => 'Saldo escondido';
+
+  @override
   String get profileBalanceEdit => 'Editar saldo';
 
   @override

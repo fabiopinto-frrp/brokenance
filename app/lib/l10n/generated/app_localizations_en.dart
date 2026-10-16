@@ -152,6 +152,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileBalanceTitle => 'Current balance';
 
   @override
+  String get balanceShow => 'Show balance';
+
+  @override
+  String get balanceHide => 'Hide balance';
+
+  @override
+  String get balanceHidden => 'Balance hidden';
+
+  @override
   String get profileBalanceEdit => 'Edit balance';
 
   @override

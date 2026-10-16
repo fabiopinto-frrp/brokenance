@@ -380,6 +380,24 @@ abstract class AppLocalizations {
   /// **'Current balance'**
   String get profileBalanceTitle;
 
+  /// No description provided for @balanceShow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show balance'**
+  String get balanceShow;
+
+  /// No description provided for @balanceHide.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide balance'**
+  String get balanceHide;
+
+  /// No description provided for @balanceHidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance hidden'**
+  String get balanceHidden;
+
   /// No description provided for @profileBalanceEdit.
   ///
   /// In en, this message translates to:

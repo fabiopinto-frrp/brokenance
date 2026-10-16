@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/profile/bloc/profile_cubit.dart';
 import '../l10n/l10n.dart';
+import '../privacy/balance_visibility.dart';
 import '../router/app_destinations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_tokens.dart';
-import 'animated_money.dart';
 
 /// The burger menu with every route. Defined once, shown by [AppShell] on every page.
 class AppDrawer extends StatelessWidget {
@@ -128,9 +128,13 @@ class _DrawerHeader extends StatelessWidget {
           ],
           if (profile != null && profile.netWorthSet) ...[
             const SizedBox(height: AppSpacing.lg),
-            Text(context.l10n.profileBalanceTitle.toUpperCase(), style: theme.textTheme.labelSmall),
-            const SizedBox(height: AppSpacing.xs),
-            AnimatedMoney(cents: profile.netWorthCents, style: theme.textTheme.titleLarge),
+            Row(
+              children: [
+                Text(context.l10n.profileBalanceTitle.toUpperCase(), style: theme.textTheme.labelSmall),
+                const BalanceVisibilityButton(size: 18),
+              ],
+            ),
+            BalanceText(cents: profile.netWorthCents, style: theme.textTheme.titleLarge),
           ],
         ],
       ),

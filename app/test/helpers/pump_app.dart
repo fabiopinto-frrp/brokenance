@@ -17,6 +17,9 @@ Future<MemorySessionStorage> pumpApp(
   bool loggedIn = false,
   MemorySessionStorage? session,
   String language = 'en',
+
+  /// Values already saved on the "device" (theme, language, hidden balance...).
+  Map<String, Object> stored = const {},
 }) async {
   // A phone-sized screen (iPhone 15/16: 390 x 844 points).
   tester.view.physicalSize = const Size(1170, 2532);
@@ -25,7 +28,7 @@ Future<MemorySessionStorage> pumpApp(
 
   // Tests have no internet: use the default font instead of downloading Inter.
   GoogleFonts.config.allowRuntimeFetching = false;
-  SharedPreferences.setMockInitialValues({'locale': language});
+  SharedPreferences.setMockInitialValues({'locale': language, ...stored});
 
   final server = backend ?? FakeBackend();
   session ??= MemorySessionStorage();

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'core/l10n/l10n.dart';
 import 'core/l10n/locale_cubit.dart';
 import 'core/network/api_client.dart';
+import 'core/privacy/balance_visibility.dart';
 import 'core/router/app_router.dart';
 import 'core/storage/app_preferences.dart';
 import 'core/theme/app_theme.dart';
@@ -43,6 +44,7 @@ class BrokenanceApp extends StatelessWidget {
         providers: [
           BlocProvider(create: (_) => ThemeCubit(preferences)),
           BlocProvider(create: (_) => LocaleCubit(preferences)),
+          BlocProvider(create: (_) => BalanceVisibilityCubit(preferences)),
           BlocProvider(
             create: (context) => AuthBloc(context.read<AuthRepository>())..add(const AuthStarted()),
           ),
