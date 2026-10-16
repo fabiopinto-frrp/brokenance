@@ -11,6 +11,8 @@ import 'core/theme/app_theme.dart';
 import 'core/theme/theme_cubit.dart';
 import 'features/auth/bloc/auth_bloc.dart';
 import 'features/auth/data/auth_repository.dart';
+import 'features/profile/bloc/profile_cubit.dart';
+import 'features/profile/data/profile_repository.dart';
 
 /// The root widget: provides the shared services and the app-wide blocs, then builds the app.
 class BrokenanceApp extends StatelessWidget {
@@ -25,6 +27,7 @@ class BrokenanceApp extends StatelessWidget {
       providers: [
         RepositoryProvider.value(value: apiClient),
         RepositoryProvider(create: (_) => AuthRepository(apiClient)),
+        RepositoryProvider(create: (_) => ProfileRepository(apiClient)),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -32,6 +35,11 @@ class BrokenanceApp extends StatelessWidget {
           BlocProvider(create: (_) => LocaleCubit(preferences)),
           BlocProvider(
             create: (context) => AuthBloc(context.read<AuthRepository>())..add(const AuthStarted()),
+          ),
+          // App-wide: the drawer shows the balance, and it loads as soon as the user is logged in.
+          BlocProvider(
+            create: (context) => ProfileCubit(context.read<ProfileRepository>(), context.read<AuthBloc>()),
+            lazy: false,
           ),
         ],
         child: const _AppView(),

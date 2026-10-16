@@ -362,6 +362,150 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @saved.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved'**
+  String get saved;
+
+  /// No description provided for @profileBalanceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Current balance'**
+  String get profileBalanceTitle;
+
+  /// No description provided for @profileBalanceEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit balance'**
+  String get profileBalanceEdit;
+
+  /// No description provided for @profileBalanceSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s your balance today?'**
+  String get profileBalanceSetupTitle;
+
+  /// No description provided for @profileBalanceSetupMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Type the money you have now. From then on it updates by itself with your income, expenses and subscriptions.'**
+  String get profileBalanceSetupMessage;
+
+  /// No description provided for @profileBalanceSetupButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Set balance'**
+  String get profileBalanceSetupButton;
+
+  /// No description provided for @profileBalanceAdjustNote.
+  ///
+  /// In en, this message translates to:
+  /// **'The difference is saved in your history as an adjustment.'**
+  String get profileBalanceAdjustNote;
+
+  /// No description provided for @profileIncomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly income'**
+  String get profileIncomeTitle;
+
+  /// No description provided for @profileIncomeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Added on the 1st of every month'**
+  String get profileIncomeHint;
+
+  /// No description provided for @profileIncomeNone.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get profileIncomeNone;
+
+  /// No description provided for @profileIncomeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'What you earn per month. It is added to your balance on the 1st of every month, starting next month. Use 0 to turn it off.'**
+  String get profileIncomeNote;
+
+  /// No description provided for @profileDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal details'**
+  String get profileDetailsTitle;
+
+  /// No description provided for @profileSecurityTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get profileSecurityTitle;
+
+  /// No description provided for @profileChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get profileChangePassword;
+
+  /// No description provided for @profileChangePasswordNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Your other devices will be logged out.'**
+  String get profileChangePasswordNote;
+
+  /// No description provided for @profilePasswordChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changed'**
+  String get profilePasswordChanged;
+
+  /// No description provided for @fieldAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get fieldAmount;
+
+  /// No description provided for @fieldCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get fieldCurrentPassword;
+
+  /// No description provided for @fieldNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get fieldNewPassword;
+
+  /// No description provided for @fieldConfirmNewPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new password'**
+  String get fieldConfirmNewPassword;
+
+  /// No description provided for @validationAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid amount, like 12.50'**
+  String get validationAmount;
+
+  /// No description provided for @validationAmountTooLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'The amount is too large'**
+  String get validationAmountTooLarge;
+
   /// No description provided for @errorNetwork.
   ///
   /// In en, this message translates to:
@@ -415,6 +559,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Some fields are not valid.'**
   String get errorValidation;
+
+  /// No description provided for @errorInvalidCurrentPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'The current password is wrong.'**
+  String get errorInvalidCurrentPassword;
 
   /// No description provided for @retry.
   ///

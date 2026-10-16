@@ -58,4 +58,23 @@ void main() {
       expect(Money.parse('1,005'), 100500);
     });
   });
+
+  group('editing', () {
+    test('formatInput gives text that parses back to the same cents', () {
+      expect(Money.formatInput(123456, const Locale('pt')), '1234,56');
+      expect(Money.formatInput(123456, const Locale('en')), '1234.56');
+      expect(Money.formatInput(-2050, const Locale('pt')), '-20,50');
+      expect(Money.formatInput(5, const Locale('en')), '0.05');
+      for (final cents in [0, 5, 1250, -2050, 123456789]) {
+        expect(Money.parseSigned(Money.formatInput(cents, const Locale('pt'))), cents);
+      }
+    });
+
+    test('parseSigned accepts a leading minus', () {
+      expect(Money.parseSigned('-12,50'), -1250);
+      expect(Money.parseSigned(' -0,5 '), -50);
+      expect(Money.parseSigned('--1'), isNull);
+      expect(Money.parseSigned('1-2'), isNull);
+    });
+  });
 }

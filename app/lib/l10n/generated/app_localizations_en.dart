@@ -145,6 +145,80 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+  String get save => 'Save';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get saved => 'Saved';
+
+  @override
+  String get profileBalanceTitle => 'Current balance';
+
+  @override
+  String get profileBalanceEdit => 'Edit balance';
+
+  @override
+  String get profileBalanceSetupTitle => 'What\'s your balance today?';
+
+  @override
+  String get profileBalanceSetupMessage =>
+      'Type the money you have now. From then on it updates by itself with your income, expenses and subscriptions.';
+
+  @override
+  String get profileBalanceSetupButton => 'Set balance';
+
+  @override
+  String get profileBalanceAdjustNote => 'The difference is saved in your history as an adjustment.';
+
+  @override
+  String get profileIncomeTitle => 'Monthly income';
+
+  @override
+  String get profileIncomeHint => 'Added on the 1st of every month';
+
+  @override
+  String get profileIncomeNone => 'Not set';
+
+  @override
+  String get profileIncomeNote =>
+      'What you earn per month. It is added to your balance on the 1st of every month, starting next month. Use 0 to turn it off.';
+
+  @override
+  String get profileDetailsTitle => 'Personal details';
+
+  @override
+  String get profileSecurityTitle => 'Security';
+
+  @override
+  String get profileChangePassword => 'Change password';
+
+  @override
+  String get profileChangePasswordNote => 'Your other devices will be logged out.';
+
+  @override
+  String get profilePasswordChanged => 'Password changed';
+
+  @override
+  String get fieldAmount => 'Amount';
+
+  @override
+  String get fieldCurrentPassword => 'Current password';
+
+  @override
+  String get fieldNewPassword => 'New password';
+
+  @override
+  String get fieldConfirmNewPassword => 'Confirm new password';
+
+  @override
+  String get validationAmount => 'Enter a valid amount, like 12.50';
+
+  @override
+  String get validationAmountTooLarge => 'The amount is too large';
+
+  @override
   String get errorNetwork => 'Can\'t reach the server. Check your connection.';
 
   @override
@@ -170,6 +244,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorValidation => 'Some fields are not valid.';
+
+  @override
+  String get errorInvalidCurrentPassword => 'The current password is wrong.';
 
   @override
   String get retry => 'Try again';

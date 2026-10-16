@@ -146,6 +146,80 @@ class AppLocalizationsPt extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
+  String get save => 'Guardar';
+
+  @override
+  String get edit => 'Editar';
+
+  @override
+  String get saved => 'Guardado';
+
+  @override
+  String get profileBalanceTitle => 'Saldo atual';
+
+  @override
+  String get profileBalanceEdit => 'Editar saldo';
+
+  @override
+  String get profileBalanceSetupTitle => 'Qual é o teu saldo hoje?';
+
+  @override
+  String get profileBalanceSetupMessage =>
+      'Escreve o dinheiro que tens agora. A partir daí atualiza-se sozinho com o teu rendimento, despesas e subscrições.';
+
+  @override
+  String get profileBalanceSetupButton => 'Definir saldo';
+
+  @override
+  String get profileBalanceAdjustNote => 'A diferença fica guardada no teu histórico como um ajuste.';
+
+  @override
+  String get profileIncomeTitle => 'Rendimento mensal';
+
+  @override
+  String get profileIncomeHint => 'Somado no dia 1 de cada mês';
+
+  @override
+  String get profileIncomeNone => 'Não definido';
+
+  @override
+  String get profileIncomeNote =>
+      'O que ganhas por mês. É somado ao teu saldo no dia 1 de cada mês, a partir do próximo. Usa 0 para desativar.';
+
+  @override
+  String get profileDetailsTitle => 'Dados pessoais';
+
+  @override
+  String get profileSecurityTitle => 'Segurança';
+
+  @override
+  String get profileChangePassword => 'Alterar palavra-passe';
+
+  @override
+  String get profileChangePasswordNote => 'Os teus outros dispositivos vão terminar sessão.';
+
+  @override
+  String get profilePasswordChanged => 'Palavra-passe alterada';
+
+  @override
+  String get fieldAmount => 'Valor';
+
+  @override
+  String get fieldCurrentPassword => 'Palavra-passe atual';
+
+  @override
+  String get fieldNewPassword => 'Nova palavra-passe';
+
+  @override
+  String get fieldConfirmNewPassword => 'Confirmar nova palavra-passe';
+
+  @override
+  String get validationAmount => 'Escreve um valor válido, por exemplo 12,50';
+
+  @override
+  String get validationAmountTooLarge => 'O valor é demasiado alto';
+
+  @override
   String get errorNetwork => 'Não foi possível contactar o servidor. Verifica a tua ligação.';
 
   @override
@@ -171,6 +245,9 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get errorValidation => 'Alguns campos não são válidos.';
+
+  @override
+  String get errorInvalidCurrentPassword => 'A palavra-passe atual está errada.';
 
   @override
   String get retry => 'Tentar novamente';

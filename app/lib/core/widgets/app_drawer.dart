@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/bloc/auth_bloc.dart';
+import '../../features/profile/bloc/profile_cubit.dart';
 import '../l10n/l10n.dart';
 import '../router/app_destinations.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_tokens.dart';
+import 'animated_money.dart';
 
 /// The burger menu with every route. Defined once, shown by [AppShell] on every page.
 class AppDrawer extends StatelessWidget {
@@ -96,14 +98,18 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
-/// The user's name and username. The net worth joins it with the profile.
+/// The user's name, username and current balance.
 class _DrawerHeader extends StatelessWidget {
   const _DrawerHeader();
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    // The profile has the latest name (it can be edited); the login user is the fallback.
+    final profile = context.select((ProfileCubit cubit) => cubit.state.profile);
     final user = context.select((AuthBloc bloc) => bloc.state.user);
+    final name = profile?.fullName ?? user?.fullName;
+    final username = profile?.username ?? user?.username;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(AppSpacing.xl, AppSpacing.xl, AppSpacing.xl, AppSpacing.lg),
@@ -111,14 +117,20 @@ class _DrawerHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            user?.fullName ?? context.l10n.appTitle,
+            name ?? context.l10n.appTitle,
             style: theme.textTheme.headlineMedium,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
-          if (user != null) ...[
+          if (username != null) ...[
             const SizedBox(height: AppSpacing.xs),
-            Text('@${user.username}', style: theme.textTheme.bodyMedium),
+            Text('@$username', style: theme.textTheme.bodyMedium),
+          ],
+          if (profile != null && profile.netWorthSet) ...[
+            const SizedBox(height: AppSpacing.lg),
+            Text(context.l10n.profileBalanceTitle.toUpperCase(), style: theme.textTheme.labelSmall),
+            const SizedBox(height: AppSpacing.xs),
+            AnimatedMoney(cents: profile.netWorthCents, style: theme.textTheme.titleLarge),
           ],
         ],
       ),

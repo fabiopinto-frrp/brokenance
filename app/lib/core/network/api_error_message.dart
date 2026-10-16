@@ -13,6 +13,7 @@ String apiErrorMessage(AppLocalizations l10n, Object error) {
     'registration_disabled' => l10n.errorRegistrationDisabled,
     'too_many_requests' => l10n.errorTooManyRequests,
     'validation_error' => l10n.errorValidation,
+    'invalid_current_password' => l10n.errorInvalidCurrentPassword,
     _ => l10n.errorUnknown,
   };
 }

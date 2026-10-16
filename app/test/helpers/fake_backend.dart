@@ -9,6 +9,9 @@ class FakeBackend {
 
   bool registrationEnabled;
 
+  /// When true, `GET /profile` fails with a server error.
+  bool failProfile = false;
+
   /// When true every request fails as if the server could not be reached.
   bool offline;
 
@@ -77,7 +80,33 @@ class FakeBackend {
     final token = (request.headers['Authorization'] as String?)?.replaceFirst('Bearer ', '');
     final username = _accessTokens[token];
     if (username == null) return FakeResponse.error(401, 'token_expired');
-    if (request.path == '/auth/me') return FakeResponse(200, {'user': _publicUser(username)});
+    final user = _users[username]!;
+    switch ((request.method, request.path)) {
+      case ('GET', '/auth/me'):
+        return FakeResponse(200, {'user': _publicUser(username)});
+      case ('PUT', '/auth/password'):
+        if (user['password'] != body['currentPassword']) {
+          return FakeResponse.error(400, 'invalid_current_password');
+        }
+        user['password'] = body['newPassword'] as String;
+        _accessTokens.removeWhere((_, owner) => owner == username);
+        _refreshTokens.removeWhere((_, owner) => owner == username);
+        return FakeResponse(200, _issue(username)..remove('user'));
+      case ('GET', '/profile'):
+        if (failProfile) return FakeResponse.error(500, 'internal_error');
+        return FakeResponse(200, _profile(username));
+      case ('PUT', '/profile'):
+        for (final key in ['firstName', 'lastName']) {
+          if (body[key] != null) user[key] = body[key] as String;
+        }
+        if (body['monthlyIncomeCents'] != null) _money(username).income = body['monthlyIncomeCents'] as int;
+        return FakeResponse(200, _profile(username));
+      case ('PUT', '/profile/net-worth'):
+        _money(username)
+          ..netWorth = body['netWorthCents'] as int
+          ..netWorthSet = true;
+        return FakeResponse(200, _profile(username));
+    }
     return const FakeResponse(200, {});
   }
 
@@ -90,6 +119,32 @@ class FakeBackend {
     return {'user': _publicUser(username), 'accessToken': access, 'refreshToken': refresh};
   }
 
+  final Map<String, _Money> _moneyByUser = {};
+  _Money _money(String username) => _moneyByUser.putIfAbsent(username, _Money.new);
+
+  /// The money of a user, to check what the app sent.
+  ({int income, int netWorth, bool netWorthSet}) moneyOf(String username) {
+    final money = _money(username);
+    return (income: money.income, netWorth: money.netWorth, netWorthSet: money.netWorthSet);
+  }
+
+  Map<String, dynamic> _profile(String username) {
+    final user = _users[username]!;
+    final money = _money(username);
+    return {
+      'profile': {
+        'username': username,
+        'firstName': user['firstName'],
+        'lastName': user['lastName'],
+        'monthlyIncomeCents': money.income,
+        'netWorthCents': money.netWorth,
+        'netWorthSet': money.netWorthSet,
+        'currency': 'EUR',
+        'timezone': 'Europe/Lisbon',
+      },
+    };
+  }
+
   Map<String, String> _publicUser(String username) {
     final user = _users[username]!;
     return {
@@ -99,4 +154,10 @@ class FakeBackend {
       'lastName': user['lastName']!,
     };
   }
+}
+
+class _Money {
+  int income = 0;
+  int netWorth = 0;
+  bool netWorthSet = false;
 }

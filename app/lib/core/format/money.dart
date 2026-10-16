@@ -14,6 +14,25 @@ abstract final class Money {
     return signed && cents > 0 ? '+$text' : text;
   }
 
+  /// Text to put in an input field for editing: 123456 -> "1234,56" (pt) or "1234.56" (en).
+  /// No currency symbol or thousands separators, so it parses back to the same value.
+  static String formatInput(int cents, Locale locale) {
+    final sign = cents < 0 ? '-' : '';
+    final absolute = cents.abs();
+    final separator = locale.languageCode == 'pt' ? ',' : '.';
+    return '$sign${absolute ~/ 100}$separator${(absolute % 100).toString().padLeft(2, '0')}';
+  }
+
+  /// Like [parse], but also accepts a leading minus: "-12,50" -> -1250.
+  static int? parseSigned(String input) {
+    final text = input.trim();
+    if (text.startsWith('-')) {
+      final value = parse(text.substring(1));
+      return value == null ? null : -value;
+    }
+    return parse(text);
+  }
+
   /// Parses what the user typed into cents: "12,50", "12.5", "1.234,56", "1,234.56", "12 €".
   /// Returns null when it is not a valid amount (letters, more than 2 decimals, negative).
   static int? parse(String input) {

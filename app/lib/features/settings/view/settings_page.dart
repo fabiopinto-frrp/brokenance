@@ -5,6 +5,7 @@ import '../../../core/l10n/l10n.dart';
 import '../../../core/l10n/locale_cubit.dart';
 import '../../../core/theme/app_tokens.dart';
 import '../../../core/theme/theme_cubit.dart';
+import '../../../core/widgets/section_title.dart';
 
 /// Appearance (system, light, dark) and language (system, Português, English).
 class SettingsPage extends StatelessWidget {
@@ -19,7 +20,7 @@ class SettingsPage extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.page),
       children: [
-        _Section(
+        _Group(
           title: l10n.settingsAppearance,
           child: SegmentedButton<ThemeMode>(
             showSelectedIcon: false,
@@ -45,7 +46,7 @@ class SettingsPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: AppSpacing.xl),
-        _Section(
+        _Group(
           title: l10n.settingsLanguage,
           child: SegmentedButton<String>(
             showSelectedIcon: false,
@@ -66,23 +67,14 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-class _Section extends StatelessWidget {
-  const _Section({required this.title, required this.child});
+class _Group extends StatelessWidget {
+  const _Group({required this.title, required this.child});
 
   final String title;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: AppSpacing.xs, bottom: AppSpacing.md),
-          child: Text(title.toUpperCase(), style: Theme.of(context).textTheme.labelSmall),
-        ),
-        child,
-      ],
-    );
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [SectionTitle(title), child]);
   }
 }

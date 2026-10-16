@@ -7,6 +7,7 @@ import '../../features/auth/bloc/auth_bloc.dart';
 import '../../features/auth/view/login_page.dart';
 import '../../features/auth/view/register_page.dart';
 import '../../features/auth/view/splash_page.dart';
+import '../../features/profile/view/profile_page.dart';
 import '../../features/settings/view/settings_page.dart';
 import '../theme/app_tokens.dart';
 import '../widgets/app_shell.dart';
@@ -58,6 +59,7 @@ String? authRedirect(AuthStatus status, String location) {
 }
 
 Widget _pageFor(AppDestination destination) => switch (destination) {
+  AppDestination.profile => const ProfilePage(),
   AppDestination.settings => const SettingsPage(),
   _ => ComingSoon(icon: destination.selectedIcon),
 };

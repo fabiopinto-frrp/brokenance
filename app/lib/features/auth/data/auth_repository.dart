@@ -38,6 +38,18 @@ class AuthRepository {
     return _startSession(body);
   }
 
+  /// Changes the password. The API logs out every other device and returns new tokens for this
+  /// one, which are saved so the user stays logged in here.
+  Future<void> changePassword({required String currentPassword, required String newPassword}) async {
+    final body = await _api.put<Map<String, dynamic>>(
+      '/auth/password',
+      data: {'currentPassword': currentPassword, 'newPassword': newPassword},
+    );
+    await _session.save(
+      Session(accessToken: body['accessToken'] as String, refreshToken: body['refreshToken'] as String),
+    );
+  }
+
   /// The user of the session saved on this device, or null when there is none or it is over.
   /// Throws an [ApiException] when the API cannot be reached (the session is kept).
   Future<User?> currentUser() async {
