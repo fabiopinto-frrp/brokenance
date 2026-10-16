@@ -4,7 +4,7 @@ A personal finance app built with Flutter. Simple, fast and good-looking, with a
 
 The goal is to give you a clear picture of your money at a glance: what you have, what you spend, what you save, and what you are saving for.
 
-> Status: the backend API is complete. The Flutter app is next.
+> Status: the backend API is complete. The Flutter app is being built (setup done).
 
 ---
 
@@ -95,9 +95,8 @@ Instructions will be added once the app is built.
 
 - [x] Define requirements and structure
 - [x] Backend API and Docker setup (auth, profile, lists, subscriptions, dashboard)
-- [ ] Scaffold the Flutter app and theme (light/dark)
+- [x] Scaffold the Flutter app: theme (light/dark), PT/EN translations, drawer and routes, API client
 - [ ] Authentication (login) and session handling
-- [ ] Drawer navigation and routes
 - [ ] Profile (name, net worth, monthly income)
 - [ ] Lists with add/edit/delete
 - [ ] Dashboard with charts

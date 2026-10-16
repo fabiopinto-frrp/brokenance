@@ -1,0 +1,34 @@
+{
+  "@@locale": "pt",
+
+  "appTitle": "Brokenance",
+
+  "navDashboard": "Resumo",
+  "navProfile": "Perfil",
+  "navSubscriptions": "Subscrições",
+  "navExpenses": "Despesas",
+  "navOutings": "Saídas/Férias",
+  "navLeisure": "Lazer",
+  "navSavings": "Poupança",
+  "navGoals": "Objetivos",
+  "navSettings": "Definições",
+  "navOpenMenu": "Abrir menu",
+
+  "settingsAppearance": "Aparência",
+  "settingsLanguage": "Idioma",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Escuro",
+  "languageSystem": "Sistema",
+  "languagePortuguese": "Português",
+  "languageEnglish": "English",
+
+  "comingSoonTitle": "Em breve",
+  "comingSoonMessage": "Este ecrã está a ser construído.",
+
+  "errorNetwork": "Não foi possível contactar o servidor. Verifica a tua ligação.",
+  "errorTimeout": "O servidor demorou demasiado a responder. Tenta novamente.",
+  "errorSessionExpired": "A tua sessão expirou. Inicia sessão novamente.",
+  "errorUnknown": "Algo correu mal. Tenta novamente.",
+  "retry": "Tentar novamente"
+}

@@ -1,0 +1,34 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "Brokenance",
+
+  "navDashboard": "Dashboard",
+  "navProfile": "Profile",
+  "navSubscriptions": "Subscriptions",
+  "navExpenses": "Expenses",
+  "navOutings": "Outings & holidays",
+  "navLeisure": "Leisure",
+  "navSavings": "Savings",
+  "navGoals": "Goals",
+  "navSettings": "Settings",
+  "navOpenMenu": "Open menu",
+
+  "settingsAppearance": "Appearance",
+  "settingsLanguage": "Language",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "languageSystem": "System",
+  "languagePortuguese": "Português",
+  "languageEnglish": "English",
+
+  "comingSoonTitle": "Coming soon",
+  "comingSoonMessage": "This screen is being built.",
+
+  "errorNetwork": "Can't reach the server. Check your connection.",
+  "errorTimeout": "The server took too long to answer. Try again.",
+  "errorSessionExpired": "Your session has expired. Please log in again.",
+  "errorUnknown": "Something went wrong. Try again.",
+  "retry": "Try again"
+}
