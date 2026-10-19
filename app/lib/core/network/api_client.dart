@@ -12,8 +12,10 @@ class ApiClient {
   ApiClient({required String baseUrl, required this.session, HttpClientAdapter? adapter}) {
     final options = BaseOptions(
       baseUrl: baseUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 20),
+      // Generous on purpose: the free hosting sleeps when idle and takes up to a minute to
+      // wake up on the first request.
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 75),
       contentType: Headers.jsonContentType,
       responseType: ResponseType.json,
     );
