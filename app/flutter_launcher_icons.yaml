@@ -1,12 +1,16 @@
 # Generates the app icons from assets/brand (see tool/generate_brand_assets_test.dart):
 #   dart run flutter_launcher_icons
 flutter_launcher_icons:
-  image_path: assets/brand/icon.png
   android: true
   ios: true
+  # iPhone: light icon by default, dark icon when the phone is in dark mode.
+  image_path_ios: assets/brand/icon_light.png
+  image_path_ios_dark_transparent: assets/brand/icon_ios_dark.png
   remove_alpha_ios: true
-  # Android 8+ adaptive icon: the white letter over the brand blue, so the phone can crop it to any shape.
-  adaptive_icon_background: "#1A6FE0"
+  # Android can't switch icons by mode, so it uses the dark navy one.
+  image_path_android: assets/brand/icon_dark.png
+  # Android 8+ adaptive icon: the bright letter over navy, so the phone can crop it to any shape.
+  adaptive_icon_background: "#0F2547"
   adaptive_icon_foreground: assets/brand/icon_foreground.png
   # Android 13 themed icons.
   adaptive_icon_monochrome: assets/brand/icon_monochrome.png

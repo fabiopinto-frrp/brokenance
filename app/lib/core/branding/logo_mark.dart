@@ -59,33 +59,60 @@ abstract final class LogoGeometry {
   static final Path lower = Path.combine(PathOperation.intersect, letter, _side(-1));
 }
 
-/// Brand colours.
-abstract final class BrandColors {
-  /// The app icon's tile, top-left to bottom-right.
-  static const tileLight = Color(0xFF3D9BFF);
-  static const tileDark = Color(0xFF0A4FC0);
+/// The logo's colours for one mode. Light: a soft white-blue tile and a deep blue letter. Dark:
+/// a navy tile and a bright blue letter. Both follow the app's own light and dark themes.
+@immutable
+class LogoPalette {
+  const LogoPalette({
+    required this.tileTop,
+    required this.tileBottom,
+    required this.markTop,
+    required this.markBottom,
+    required this.tileEdge,
+  });
 
-  /// The letter on light or dark screens, top to bottom.
-  static const markLight = Color(0xFF3D9BFF);
-  static const markDark = Color(0xFF0A5FD6);
+  final Color tileTop;
+  final Color tileBottom;
+  final Color markTop;
+  final Color markBottom;
 
-  /// Background of the Android adaptive icon (a flat colour).
-  static const iconBackground = Color(0xFF1A6FE0);
+  /// A hairline around the tile, so a light tile stays visible on a light screen.
+  final Color tileEdge;
+
+  static const light = LogoPalette(
+    tileTop: Color(0xFFFFFFFF),
+    tileBottom: Color(0xFFE4EEFC),
+    markTop: Color(0xFF2E8FFF),
+    markBottom: Color(0xFF0052C4),
+    tileEdge: Color(0xFFDCE4F0),
+  );
+
+  static const dark = LogoPalette(
+    tileTop: Color(0xFF173A6B),
+    tileBottom: Color(0xFF08142A),
+    markTop: Color(0xFF8CC8FF),
+    markBottom: Color(0xFF2E8FFF),
+    tileEdge: Color(0xFF1F3A63),
+  );
+
+  static LogoPalette of(Brightness brightness) => brightness == Brightness.dark ? dark : light;
 }
 
-/// Paints the mark filling the box it is given. [opening] goes from 0 (the letter looks whole)
-/// to 1 (the cut is open and the top part has slid). [color] paints it in one colour (white on
-/// the app icon, themed icons); without it the letter uses the brand gradient.
+/// Paints the letter filling the box it is given. [opening] goes from 0 (the letter looks whole)
+/// to 1 (the cut is open and the top part has slid). [color] paints it in one colour (themed
+/// icons); without it the letter uses the [palette] gradient.
 class LogoMarkPainter extends CustomPainter {
-  const LogoMarkPainter({this.opening = 1, this.color});
+  const LogoMarkPainter({this.opening = 1, this.color, this.palette = LogoPalette.light});
 
   final double opening;
   final Color? color;
+  final LogoPalette palette;
 
   @override
   void paint(Canvas canvas, Size size) {
     final scale = size.shortestSide / LogoGeometry.box;
     canvas
+      ..save()
       ..translate((size.width - size.shortestSide) / 2, (size.height - size.shortestSide) / 2)
       ..scale(scale);
 
@@ -93,10 +120,10 @@ class LogoMarkPainter extends CustomPainter {
     if (color != null) {
       paint.color = color!;
     } else {
-      paint.shader = const LinearGradient(
+      paint.shader = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [BrandColors.markLight, BrandColors.markDark],
+        colors: [palette.markTop, palette.markBottom],
       ).createShader(const Rect.fromLTWH(0, 150, LogoGeometry.box, 700));
     }
 
@@ -110,41 +137,76 @@ class LogoMarkPainter extends CustomPainter {
         ..color = paint.color.withValues(alpha: (1 - opening).clamp(0, 1) * paint.color.a);
       canvas.drawPath(LogoGeometry.letter, whole);
     }
+    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(LogoMarkPainter old) => old.opening != opening || old.color != color;
+  bool shouldRepaint(LogoMarkPainter old) =>
+      old.opening != opening || old.color != color || old.palette != palette;
 }
 
-/// Paints the app icon: the white letter on the blue tile, full bleed (the platforms round it).
-class AppIconPainter extends CustomPainter {
-  const AppIconPainter({this.markFraction = 0.8});
+/// Paints the logo on its tile. [rounded] gives the tile its own rounded corners (inside the app
+/// and on launch screens); app icons are full bleed because the phone rounds them itself.
+class LogoTilePainter extends CustomPainter {
+  const LogoTilePainter({
+    this.palette = LogoPalette.light,
+    this.opening = 1,
+    this.rounded = true,
+    this.markFraction = 0.8,
+  });
 
-  /// How much of the icon the letter's box takes.
+  final LogoPalette palette;
+  final double opening;
+  final bool rounded;
+
+  /// How much of the tile the letter's box takes.
   final double markFraction;
+
+  /// Corner radius of a rounded tile, as a fraction of its width (like an app icon).
+  static const cornerFraction = 0.225;
 
   @override
   void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
-    canvas.drawRect(
+    final shape = RRect.fromRectAndRadius(
       rect,
+      Radius.circular(rounded ? size.shortestSide * cornerFraction : 0),
+    );
+    canvas.drawRRect(
+      shape,
       Paint()
-        ..shader = const LinearGradient(
+        ..shader = LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [BrandColors.tileLight, BrandColors.tileDark],
+          colors: [palette.tileTop, palette.tileBottom],
         ).createShader(rect),
     );
+    if (rounded) {
+      canvas.drawRRect(
+        shape.deflate(0.5),
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = size.shortestSide / 128
+          ..color = palette.tileEdge,
+      );
+    }
     final box = size.shortestSide * markFraction;
-    canvas.translate((size.width - box) / 2, (size.height - box) / 2);
-    const LogoMarkPainter(color: Color(0xFFFFFFFF)).paint(canvas, Size.square(box));
+    canvas
+      ..save()
+      ..translate((size.width - box) / 2, (size.height - box) / 2);
+    LogoMarkPainter(opening: opening, palette: palette).paint(canvas, Size.square(box));
+    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(AppIconPainter old) => old.markFraction != markFraction;
+  bool shouldRepaint(LogoTilePainter old) =>
+      old.palette != palette ||
+      old.opening != opening ||
+      old.rounded != rounded ||
+      old.markFraction != markFraction;
 }
 
-/// The mark as a widget, [size] logical pixels wide and tall.
+/// The logo on its tile, [size] logical pixels wide, in the colours of the current mode.
 class LogoMark extends StatelessWidget {
   const LogoMark({super.key, required this.size, this.opening = 1});
 
@@ -153,20 +215,33 @@ class LogoMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brightness = Theme.of(context).brightness;
     return Semantics(
       image: true,
       label: 'Brokenance',
       child: ExcludeSemantics(
-        child: CustomPaint(
-          size: Size.square(size),
-          painter: LogoMarkPainter(opening: opening),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(size * LogoTilePainter.cornerFraction),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF0A2A5C).withValues(alpha: brightness == Brightness.dark ? 0.4 : 0.12),
+                blurRadius: size * 0.18,
+                offset: Offset(0, size * 0.06),
+              ),
+            ],
+          ),
+          child: CustomPaint(
+            size: Size.square(size),
+            painter: LogoTilePainter(palette: LogoPalette.of(brightness), opening: opening),
+          ),
         ),
       ),
     );
   }
 }
 
-/// The letter appears whole, then the cut opens and the top slides. Used on the splash screen.
+/// The logo appears whole, then the cut opens and the top slides. Used on the splash screen.
 class AnimatedLogoMark extends StatelessWidget {
   const AnimatedLogoMark({super.key, required this.size});
 

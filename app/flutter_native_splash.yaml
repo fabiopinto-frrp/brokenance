@@ -1,14 +1,15 @@
 # Generates the launch screens (shown before Flutter starts) for Android and iOS:
 #   dart run flutter_native_splash:create
-# The in-app splash (lib/features/auth/view/splash_page.dart) continues from it.
+# The in-app splash (lib/features/auth/view/splash_page.dart) continues from it. Light and dark
+# follow the app's own themes.
 flutter_native_splash:
   color: "#F5F5F7"
   color_dark: "#0A0A0B"
   image: assets/brand/splash_logo.png
-  image_dark: assets/brand/splash_logo.png
+  image_dark: assets/brand/splash_logo_dark.png
   android_12:
     color: "#F5F5F7"
     color_dark: "#0A0A0B"
     image: assets/brand/splash_logo_android12.png
-    image_dark: assets/brand/splash_logo_android12.png
+    image_dark: assets/brand/splash_logo_android12_dark.png
   fullscreen: false

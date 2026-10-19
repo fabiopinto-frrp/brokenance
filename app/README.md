@@ -25,7 +25,7 @@ lib/
     router/               routes and the drawer destinations
     network/              ApiClient (Dio), token refresh, ApiException, translated errors
     storage/              secure session storage (tokens), preferences (theme, language)
-    branding/             the logo (LogoMark, AppIconPainter) and its colours, drawn in code
+    branding/             the logo (LogoMark, LogoTilePainter) and its light/dark colours, drawn in code
     format/               Money: cents <-> "12,50 €"
     widgets/              shell (title bar + drawer), drawer, shared widgets
   features/               one folder per feature (bloc, data, view)
@@ -44,8 +44,9 @@ Rules:
 
 The logo is a bold geometric "b" sliced once on a diagonal, the top part shifted along the cut
 (broke, but still moving up). It is drawn in code by `lib/core/branding/logo_mark.dart`, so the splash
-animation, the login screen and every PNG come from the same shape. The app icon is the white letter
-on a blue tile; inside the app the letter is blue.
+animation, the login screen and every PNG come from the same shape. It has a light version (soft
+white-blue tile, deep blue letter) and a dark one (navy tile, bright blue letter) that follow the app's
+modes. iPhone icons switch with the system; Android uses the dark one.
 
 To change it, edit that file and regenerate:
 
