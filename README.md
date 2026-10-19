@@ -25,33 +25,34 @@ The home screen. It shows overall information and statistics with charts, for ex
 
 ### Profile
 - Set and change your first and last name.
-- **Net worth**: the money you currently have. You type the starting value and can edit it whenever you need to. After that it updates automatically as money comes in and goes out.
+- **Net worth**: the money you currently have. You type the starting value and can edit it whenever you need to. After that it updates automatically as money comes in and goes out. An eye button hides it (the app remembers your choice).
 - **Monthly income (company payment)**: a fixed amount, for example `900`. On the **1st day of every month** it is automatically added to your net worth.
 
 ### Lists
 Each of these sections is a list where every row has **edit** and **delete** actions:
 
-| Route | Meaning |
+| Section | What it is |
 |---|---|
-| Subscrições | Your subscriptions (gym, Netflix, insurance...), charged automatically every month or every year |
-| Despesas | Expenses |
-| Saídas/Férias | Outings and holidays |
-| Lazer | Leisure |
-| Poupança | How much you want to save per month. The latest row is your current target, older rows stay as history |
-| Objetivos | Goals (save X to buy Y). You update the saved amount by hand, with a quick "add to goal" button on each row |
+| Subscriptions | Your subscriptions (gym, Netflix, insurance...), charged automatically every month or every year |
+| Expenses | What you spend day to day |
+| Outings & holidays | Dinners out, trips and holidays |
+| Leisure | Cinema, games, hobbies |
+| Savings | How much you want to save per month. The latest row is your current target, older rows stay as history |
+| Goals | Save X to buy Y. You update the saved amount by hand, with a quick "add to goal" button on each row |
 
-Items are added through a form where you pick the type, so the item ends up in the right list.
+Every list has an **Add** button, and you swipe a row away to delete it (with an **Undo** for a few seconds).
 
 How they affect your net worth:
-- **Despesas, Lazer, Saídas/Férias**: you add them by hand when you spend the money, and they subtract from your net worth.
-- **Subscrições**: charged automatically on their day (every month, or every year on a day and month), and subtracted from your net worth each time.
-- **Poupança and Objetivos**: only track your savings target and goal progress. They do not change your net worth.
+- **Expenses, Leisure, Outings & holidays**: you add them by hand when you spend the money, and they subtract from your net worth.
+- **Subscriptions**: charged automatically on their day (every month, or every year on a day and month), and subtracted from your net worth each time.
+- **Savings and Goals**: only track your savings target and goal progress. They do not change your net worth.
 - Editing or deleting an item keeps your net worth consistent.
 
 ### Appearance
 - Dark and light mode
 - Available in Portuguese and English
-- Minimal UI with smooth animations and polished charts
+- Minimal UI with smooth animations and charts
+- A logo, app icons and launch screens: a coin cracked in two (broke, but rising)
 
 ---
 
@@ -102,11 +103,27 @@ More in [app/README.md](app/README.md).
 
 ## Roadmap
 
+Done:
 - [x] Define requirements and structure
 - [x] Backend API and Docker setup (auth, profile, lists, subscriptions, dashboard)
-- [x] Scaffold the Flutter app: theme (light/dark), PT/EN translations, drawer and routes, API client
+- [x] Flutter app setup: theme (light/dark), Portuguese and English translations, drawer and routes, API client
 - [x] Login, register, staying logged in, logout and session expiry
 - [x] Profile: balance, monthly income, name, change password
-- [x] Lists with add/edit/delete: Despesas, Saídas/Férias, Lazer, Subscrições, Poupança, Objetivos
+- [x] Lists with add/edit/delete: Expenses, Outings & holidays, Leisure, Subscriptions, Savings, Goals
 - [x] Dashboard with charts: balance over time, spending by category, income vs spending, goals
 - [x] Connect the app to the API
+- [x] Security review (dependency audit, proxy-aware rate limit, docs off in production, https-only release builds)
+- [x] Hide or show the balance with an eye button
+- [x] Logo, app icons and launch screens
+
+Next:
+- [ ] Deploy the API (Render for the server, Neon for PostgreSQL) and turn registration off
+- [ ] Build the release app pointing to the deployed https address (with its own signing key)
+- [ ] Test on an iPhone simulator and a real iPhone (needs Xcode selected, see above)
+
+Ideas for later:
+- [ ] Let the user change the time zone or currency (fixed to Europe/Lisbon and EUR today)
+- [ ] Notifications before a subscription renews
+- [ ] Face ID / fingerprint unlock
+- [ ] Load older items in the expense lists (they show the latest 100 for now)
+- [ ] Use the app offline
