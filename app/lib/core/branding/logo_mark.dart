@@ -4,129 +4,144 @@ import 'package:material_ui/material_ui.dart';
 
 import '../theme/app_tokens.dart';
 
-/// The Brokenance mark: a coin (finance) cracked in two (broke), with the top-right half pushed
-/// up (it recovers). Everything that shows the logo draws it from here: the in-app logo, the
-/// splash animation, and the PNG app icons (see tool/generate_brand_assets_test.dart).
+/// The Brokenance mark: a bold geometric "b" sliced once on a diagonal, the top part shifted
+/// along the cut (broke, but still moving up). Everything that shows the logo draws it from here:
+/// the in-app logo, the splash animation and the PNG icons (tool/generate_brand_assets_test.dart).
 abstract final class LogoGeometry {
-  /// The mark is drawn around (0, 0). The coin has this radius...
-  static const radius = 300.0;
+  /// The mark is drawn in a 1000 x 1000 box; the letter is centred in it.
+  static const box = 1000.0;
 
-  /// ...and the mark fits in a square of 2 * [extent] (a little margin around the coin).
-  static const extent = 340.0;
+  /// Stroke width of the stem and the bowl.
+  static const stroke = 140.0;
 
-  /// The rim ring inside the edge of the coin.
-  static const rimRadius = 240.0;
-  static const rimWidth = 16.0;
+  /// The stem: from the top of the letter to its baseline.
+  static const stem = Rect.fromLTWH(260, 160, stroke, 680);
 
-  /// How far apart the two halves end up when the crack is fully open.
-  static const gap = 36.0;
+  /// The bowl: a ring sitting on the baseline, overlapping the stem.
+  static const bowlCentre = Offset(500, 600);
+  static const bowlRadius = 240.0;
 
-  /// Along the crack (top-left to bottom-right) and away from it, towards the upper-right half.
-  static const along = Offset(math.sqrt1_2, math.sqrt1_2);
-  static const away = Offset(math.sqrt1_2, -math.sqrt1_2);
+  /// The cut: a straight line through the letter, rising to the right.
+  static const cutPoint = Offset(500, 560);
+  static final cutDirection = Offset.fromDirection(-25 * math.pi / 180);
 
-  // The crack as (position along, sideways wobble) pairs: irregular, like a real fracture.
-  static const _crack = [
-    (-380.0, 0.0),
-    (-215.0, 34.0),
-    (-120.0, -26.0),
-    (-10.0, 30.0),
-    (95.0, -30.0),
-    (200.0, 26.0),
-    (285.0, -20.0),
-    (380.0, 0.0),
-  ];
+  /// Width of the gap the cut leaves, and how far the top part slides along it when open.
+  static const gap = 26.0;
+  static const slide = 26.0;
 
-  /// The points of the crack line, from one edge of the coin to the other.
-  static final List<Offset> crack = [for (final (t, wobble) in _crack) along * t + away * wobble];
+  static final Path letter = () {
+    final stemPath = Path()
+      ..addRRect(
+        RRect.fromRectAndCorners(
+          stem,
+          topLeft: const Radius.circular(stroke / 2),
+          topRight: const Radius.circular(stroke / 2),
+        ),
+      );
+    final outer = Path()..addOval(Rect.fromCircle(center: bowlCentre, radius: bowlRadius));
+    final inner = Path()..addOval(Rect.fromCircle(center: bowlCentre, radius: bowlRadius - stroke));
+    final bowl = Path.combine(PathOperation.difference, outer, inner);
+    return Path.combine(PathOperation.union, stemPath, bowl);
+  }();
 
-  static final Path _coin = Path()..addOval(Rect.fromCircle(center: Offset.zero, radius: radius));
-
-  static Path _half(double side) {
-    final far = away * (side * 900);
-    final polygon = Path()..addPolygon([...crack, crack.last + far, crack.first + far], true);
-    return Path.combine(PathOperation.intersect, _coin, polygon);
+  /// The side of the cut above it ([side] 1) or below it ([side] -1), minus half the gap.
+  static Path _side(double side) {
+    final normal = Offset(cutDirection.dy, -cutDirection.dx) * side; // points away from the cut
+    final start = cutPoint - cutDirection * 2000 + normal * (gap / 2);
+    final end = cutPoint + cutDirection * 2000 + normal * (gap / 2);
+    return Path()..addPolygon([start, end, end + normal * 3000, start + normal * 3000], true);
   }
 
-  /// The half on the upper-right side of the crack (the one that rises).
-  static final Path upper = _half(1);
+  /// The part of the letter above the cut (the one that slides).
+  static final Path upper = Path.combine(PathOperation.intersect, letter, _side(1));
 
-  /// The half on the lower-left side of the crack.
-  static final Path lower = _half(-1);
+  /// The part of the letter below the cut.
+  static final Path lower = Path.combine(PathOperation.intersect, letter, _side(-1));
 }
 
-/// Brand colours. The mark is blue on any background: light halves on top, darker below.
+/// Brand colours.
 abstract final class BrandColors {
-  static const background = Color(0xFF0A0A0B);
-  static const upperLight = Color(0xFF8CC4FF);
-  static const upperDark = Color(0xFF2E8FFF);
-  static const lowerLight = Color(0xFF1E7BEF);
-  static const lowerDark = Color(0xFF0A4FC0);
+  /// The app icon's tile, top-left to bottom-right.
+  static const tileLight = Color(0xFF3D9BFF);
+  static const tileDark = Color(0xFF0A4FC0);
+
+  /// The letter on light or dark screens, top to bottom.
+  static const markLight = Color(0xFF3D9BFF);
+  static const markDark = Color(0xFF0A5FD6);
+
+  /// Background of the Android adaptive icon (a flat colour).
+  static const iconBackground = Color(0xFF1A6FE0);
 }
 
-/// Paints the mark filling the box it is given. [opening] goes from 0 (the coin looks whole) to 1
-/// (the crack is fully open). With [monochrome] both halves use that one colour (themed icons).
+/// Paints the mark filling the box it is given. [opening] goes from 0 (the letter looks whole)
+/// to 1 (the cut is open and the top part has slid). [color] paints it in one colour (white on
+/// the app icon, themed icons); without it the letter uses the brand gradient.
 class LogoMarkPainter extends CustomPainter {
-  const LogoMarkPainter({this.opening = 1, this.monochrome});
+  const LogoMarkPainter({this.opening = 1, this.color});
 
   final double opening;
-  final Color? monochrome;
+  final Color? color;
 
   @override
   void paint(Canvas canvas, Size size) {
+    final scale = size.shortestSide / LogoGeometry.box;
     canvas
-      ..translate(size.width / 2, size.height / 2)
-      ..scale(size.shortestSide / (2 * LogoGeometry.extent));
+      ..translate((size.width - size.shortestSide) / 2, (size.height - size.shortestSide) / 2)
+      ..scale(scale);
 
-    final shift = LogoGeometry.away * (LogoGeometry.gap / 2 * opening);
-    final bounds = Rect.fromCircle(center: Offset.zero, radius: LogoGeometry.radius);
-
-    Paint paintFor(Color from, Color to, Alignment begin, Alignment end) => Paint()
-      ..isAntiAlias = true
-      ..shader = monochrome == null
-          ? LinearGradient(begin: begin, end: end, colors: [from, to]).createShader(bounds)
-          : null
-      ..color = monochrome ?? const Color(0xFFFFFFFF);
-
-    // The rim: a ring inside the edge of each half, which makes the shape read as a coin. In
-    // colour it is a lighter line; in one-colour icons it is cut out of the shape.
-    final rim = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = LogoGeometry.rimWidth
-      ..isAntiAlias = true;
-    if (monochrome == null) {
-      rim.color = const Color(0x4DFFFFFF);
+    final paint = Paint()..isAntiAlias = true;
+    if (color != null) {
+      paint.color = color!;
     } else {
-      rim.blendMode = BlendMode.clear;
+      paint.shader = const LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [BrandColors.markLight, BrandColors.markDark],
+      ).createShader(const Rect.fromLTWH(0, 150, LogoGeometry.box, 700));
     }
 
-    void half(Path path, Offset move, Paint fill) {
-      canvas
-        ..save()
-        ..translate(move.dx, move.dy)
-        ..drawPath(path, fill)
-        ..clipPath(path)
-        ..drawCircle(Offset.zero, LogoGeometry.rimRadius, rim)
-        ..restore();
+    // While closed, the gap is hidden by drawing the whole letter; it fades into the cut letter.
+    final shift = LogoGeometry.cutDirection * (LogoGeometry.slide * opening);
+    canvas.drawPath(LogoGeometry.lower, paint);
+    canvas.drawPath(LogoGeometry.upper.shift(shift), paint);
+    if (opening < 1) {
+      final whole = Paint()
+        ..shader = paint.shader
+        ..color = paint.color.withValues(alpha: (1 - opening).clamp(0, 1) * paint.color.a);
+      canvas.drawPath(LogoGeometry.letter, whole);
     }
-
-    // A layer, so that "cut out" really makes the rim transparent in one-colour icons.
-    canvas.saveLayer(Rect.fromCircle(center: Offset.zero, radius: LogoGeometry.extent * 1.2), Paint());
-    half(
-      LogoGeometry.lower,
-      Offset(-shift.dx, -shift.dy),
-      paintFor(BrandColors.lowerLight, BrandColors.lowerDark, Alignment.topLeft, Alignment.bottomRight),
-    );
-    half(
-      LogoGeometry.upper,
-      shift,
-      paintFor(BrandColors.upperLight, BrandColors.upperDark, Alignment.topRight, Alignment.bottomLeft),
-    );
-    canvas.restore();
   }
 
   @override
-  bool shouldRepaint(LogoMarkPainter old) => old.opening != opening || old.monochrome != monochrome;
+  bool shouldRepaint(LogoMarkPainter old) => old.opening != opening || old.color != color;
+}
+
+/// Paints the app icon: the white letter on the blue tile, full bleed (the platforms round it).
+class AppIconPainter extends CustomPainter {
+  const AppIconPainter({this.markFraction = 0.8});
+
+  /// How much of the icon the letter's box takes.
+  final double markFraction;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
+    canvas.drawRect(
+      rect,
+      Paint()
+        ..shader = const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [BrandColors.tileLight, BrandColors.tileDark],
+        ).createShader(rect),
+    );
+    final box = size.shortestSide * markFraction;
+    canvas.translate((size.width - box) / 2, (size.height - box) / 2);
+    const LogoMarkPainter(color: Color(0xFFFFFFFF)).paint(canvas, Size.square(box));
+  }
+
+  @override
+  bool shouldRepaint(AppIconPainter old) => old.markFraction != markFraction;
 }
 
 /// The mark as a widget, [size] logical pixels wide and tall.
@@ -151,7 +166,7 @@ class LogoMark extends StatelessWidget {
   }
 }
 
-/// The mark appears whole and then the coin cracks open. Used on the splash screen.
+/// The letter appears whole, then the cut opens and the top slides. Used on the splash screen.
 class AnimatedLogoMark extends StatelessWidget {
   const AnimatedLogoMark({super.key, required this.size});
 

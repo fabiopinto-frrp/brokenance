@@ -32,36 +32,36 @@ Future<({int width, int height, ui.Color Function(double x, double y) at})> read
 
 void main() {
   group('logo geometry', () {
-    test('the coin is two halves, on each side of the crack', () {
-      const away = LogoGeometry.away;
-      final upperSide = away * 100;
-      final lowerSide = away * -100;
-
-      expect(LogoGeometry.upper.contains(upperSide), isTrue);
-      expect(LogoGeometry.upper.contains(lowerSide), isFalse);
-      expect(LogoGeometry.lower.contains(lowerSide), isTrue);
-      expect(LogoGeometry.lower.contains(upperSide), isFalse);
+    test('the letter is a stem and a bowl with a hole', () {
+      final letter = LogoGeometry.letter;
+      expect(letter.contains(const Offset(330, 250)), isTrue); // top of the stem
+      expect(letter.contains(const Offset(330, 800)), isTrue); // bottom of the stem
+      expect(letter.contains(const Offset(700, 600)), isTrue); // right side of the bowl
+      expect(letter.contains(LogoGeometry.bowlCentre), isFalse); // the hole
+      expect(letter.contains(const Offset(900, 200)), isFalse); // outside
     });
 
-    test('together the halves make a coin, and nothing sticks out of it', () {
-      const radius = LogoGeometry.radius;
-      expect(LogoGeometry.upper.getBounds().width, lessThanOrEqualTo(2 * radius + 0.1));
-      expect(LogoGeometry.lower.getBounds().height, lessThanOrEqualTo(2 * radius + 0.1));
-      // A point just inside the edge, away from the crack, belongs to one of the two halves.
-      for (final angle in [0.0, 1.3, 2.6, 3.9, 5.2]) {
-        final point = Offset.fromDirection(angle, radius - 4);
-        final inUpper = LogoGeometry.upper.contains(point);
-        final inLower = LogoGeometry.lower.contains(point);
-        expect(inUpper || inLower, isTrue, reason: 'angle $angle');
-        expect(inUpper && inLower, isFalse, reason: 'angle $angle');
-      }
-      // Outside the coin there is nothing.
-      expect(LogoGeometry.upper.contains(const Offset(radius + 10, 0)), isFalse);
+    test('the cut splits it in two parts, with a gap between them', () {
+      bool inUpper(Offset p) => LogoGeometry.upper.contains(p);
+      bool inLower(Offset p) => LogoGeometry.lower.contains(p);
+
+      expect(inUpper(const Offset(330, 250)) && !inLower(const Offset(330, 250)), isTrue);
+      expect(inLower(const Offset(330, 800)) && !inUpper(const Offset(330, 800)), isTrue);
+      // On the cut line itself: in neither part.
+      final onCut = LogoGeometry.cutPoint - LogoGeometry.cutDirection * 170;
+      expect(LogoGeometry.letter.contains(onCut), isTrue);
+      expect(inUpper(onCut) || inLower(onCut), isFalse);
     });
 
-    test('the mark always fits in its box', () {
-      // Coin plus half of the gap, in every direction, stays inside the box.
-      expect(LogoGeometry.radius + LogoGeometry.gap / 2, lessThan(LogoGeometry.extent));
+    test('the letter fits in its box, also when the top part has slid', () {
+      final bounds = LogoGeometry.letter.getBounds().expandToInclude(
+        LogoGeometry.upper.shift(LogoGeometry.cutDirection * LogoGeometry.slide).getBounds(),
+      );
+      expect(const Rect.fromLTWH(0, 0, LogoGeometry.box, LogoGeometry.box).contains(bounds.topLeft), isTrue);
+      expect(
+        const Rect.fromLTWH(0, 0, LogoGeometry.box, LogoGeometry.box).contains(bounds.bottomRight),
+        isTrue,
+      );
     });
   });
 
@@ -79,37 +79,35 @@ void main() {
       }
     });
 
-    testWidgets('the app icon is an opaque dark square with the coin in the middle', (tester) async {
+    testWidgets('the app icon is an opaque blue square with the white letter', (tester) async {
       await tester.runAsync(() async {
         final icon = await readPng('icon.png');
-        expect(icon.at(0.02, 0.02), BrandColors.background); // corner: dark, fully opaque
-        final centre = icon.at(0.5, 0.5);
-        expect(centre.a, 1.0);
-        expect(centre.b, greaterThan(centre.r)); // blue
+        final corner = icon.at(0.02, 0.02);
+        expect(corner.a, 1.0);
+        expect(corner.b, greaterThan(corner.r)); // blue
+        // The stem of the letter, at 0.8 of the icon: white.
+        final stem = icon.at(0.1 + 0.8 * 0.33, 0.1 + 0.8 * 0.75);
+        expect((stem.r, stem.g, stem.b), (1.0, 1.0, 1.0));
       });
     });
 
-    testWidgets('the launch logo is transparent around the coin', (tester) async {
+    testWidgets('the launch logo is transparent around and inside the letter', (tester) async {
       await tester.runAsync(() async {
         final splash = await readPng('splash_logo.png');
-        expect(splash.at(0.01, 0.01).a, 0.0);
-        expect(splash.at(0.5, 0.35).a, 1.0);
+        expect(splash.at(0.02, 0.02).a, 0.0);
+        expect(splash.at(0.33, 0.75).a, 1.0); // stem
+        expect(splash.at(0.5, 0.6).a, 0.0); // the bowl's hole
       });
     });
 
-    testWidgets('the one-colour icon is solid white, with the rim and the outside cut out', (tester) async {
+    testWidgets('the one-colour icon is a solid white letter, the rest see-through', (tester) async {
       await tester.runAsync(() async {
         final mono = await readPng('icon_monochrome.png');
-        expect(mono.at(0.01, 0.01).a, 0.0); // outside
-        final body = mono.at(0.4, 0.62); // inside the lower half, between the middle and the rim
-        expect(body.a, 1.0);
-        expect((body.r, body.g, body.b), (1.0, 1.0, 1.0));
-        // Along the lower-left diagonal the rim (a ring) is see-through.
-        const scale = 1024 * 0.94 / (2 * LogoGeometry.extent);
-        final rim =
-            Offset.fromDirection(2.356, LogoGeometry.rimRadius) - LogoGeometry.away * (LogoGeometry.gap / 2);
-        final pixel = Offset(0.5, 0.5) + rim * scale / 1024;
-        expect(mono.at(pixel.dx, pixel.dy).a, lessThan(0.5));
+        final stem = mono.at(0.33, 0.75);
+        expect(stem.a, 1.0);
+        expect((stem.r, stem.g, stem.b), (1.0, 1.0, 1.0));
+        expect(mono.at(0.5, 0.6).a, 0.0); // hole
+        expect(mono.at(0.9, 0.1).a, 0.0); // outside
       });
     });
   });

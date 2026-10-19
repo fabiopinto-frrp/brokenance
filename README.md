@@ -52,7 +52,7 @@ How they affect your net worth:
 - Dark and light mode
 - Available in Portuguese and English
 - Minimal UI with smooth animations and charts
-- A logo, app icons and launch screens: a coin cracked in two (broke, but rising)
+- A logo, app icons and launch screens: a bold "b" sliced once on a diagonal (broke, but still moving up)
 
 ---
 

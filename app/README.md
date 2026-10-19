@@ -25,7 +25,7 @@ lib/
     router/               routes and the drawer destinations
     network/              ApiClient (Dio), token refresh, ApiException, translated errors
     storage/              secure session storage (tokens), preferences (theme, language)
-    branding/             the logo (LogoMark) and its colours, drawn in code
+    branding/             the logo (LogoMark, AppIconPainter) and its colours, drawn in code
     format/               Money: cents <-> "12,50 €"
     widgets/              shell (title bar + drawer), drawer, shared widgets
   features/               one folder per feature (bloc, data, view)
@@ -42,8 +42,10 @@ Rules:
 
 ## Logo, icons and launch screens
 
-The logo is a coin cracked in two (broke + finance), drawn in code by `lib/core/branding/logo_mark.dart`
-so the splash animation, the login screen and every PNG come from the same shape.
+The logo is a bold geometric "b" sliced once on a diagonal, the top part shifted along the cut
+(broke, but still moving up). It is drawn in code by `lib/core/branding/logo_mark.dart`, so the splash
+animation, the login screen and every PNG come from the same shape. The app icon is the white letter
+on a blue tile; inside the app the letter is blue.
 
 To change it, edit that file and regenerate:
 

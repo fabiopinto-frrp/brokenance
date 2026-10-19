@@ -5,8 +5,8 @@ flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  # Android 8+ adaptive icon: the mark over a dark background, so the phone can crop it to any shape.
-  adaptive_icon_background: "#0A0A0B"
+  # Android 8+ adaptive icon: the white letter over the brand blue, so the phone can crop it to any shape.
+  adaptive_icon_background: "#1A6FE0"
   adaptive_icon_foreground: assets/brand/icon_foreground.png
   # Android 13 themed icons.
   adaptive_icon_monochrome: assets/brand/icon_monochrome.png
