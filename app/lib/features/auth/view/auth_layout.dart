@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 
+import '../../../core/branding/logo_mark.dart';
 import '../../../core/theme/app_tokens.dart';
 
 /// Shared layout of the login and register screens: big title, subtitle and a centred column
@@ -11,12 +12,16 @@ class AuthLayout extends StatelessWidget {
     required this.subtitle,
     required this.children,
     this.leading,
+    this.showLogo = false,
   });
 
   final String title;
   final String subtitle;
   final List<Widget> children;
   final Widget? leading;
+
+  /// Shows the logo above the title (the login screen).
+  final bool showLogo;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +45,10 @@ class AuthLayout extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
+                    if (showLogo) ...[
+                      const Align(alignment: Alignment.centerLeft, child: LogoMark(size: 64)),
+                      const SizedBox(height: AppSpacing.xl),
+                    ],
                     Text(title, style: theme.textTheme.displaySmall),
                     const SizedBox(height: AppSpacing.sm),
                     Text(

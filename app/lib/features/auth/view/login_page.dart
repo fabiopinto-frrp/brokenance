@@ -63,6 +63,7 @@ class _LoginFormState extends State<_LoginForm> {
     final clearError = context.read<AuthFormCubit>().clearError;
 
     return AuthLayout(
+      showLogo: true,
       title: l10n.appTitle,
       subtitle: l10n.loginSubtitle,
       children: [

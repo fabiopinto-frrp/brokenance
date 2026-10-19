@@ -25,6 +25,7 @@ lib/
     router/               routes and the drawer destinations
     network/              ApiClient (Dio), token refresh, ApiException, translated errors
     storage/              secure session storage (tokens), preferences (theme, language)
+    branding/             the logo (LogoMark) and its colours, drawn in code
     format/               Money: cents <-> "12,50 €"
     widgets/              shell (title bar + drawer), drawer, shared widgets
   features/               one folder per feature (bloc, data, view)
@@ -38,6 +39,20 @@ Rules:
 - Money is always `int` cents. Show it with `Money.format`, read user input with `Money.parse`.
 - Material comes from `package:material_ui` (Flutter's new standalone Material package), not
   `package:flutter/material.dart`.
+
+## Logo, icons and launch screens
+
+The logo is a coin cracked in two (broke + finance), drawn in code by `lib/core/branding/logo_mark.dart`
+so the splash animation, the login screen and every PNG come from the same shape.
+
+To change it, edit that file and regenerate:
+
+```sh
+flutter test tool/generate_brand_assets_test.dart   # assets/brand/*.png and logo.svg
+dart run flutter_launcher_icons                     # Android and iOS app icons
+dart run flutter_native_splash:create               # Android and iOS launch screens
+git checkout ios/Runner.xcodeproj/project.pbxproj ios/Runner/Info.plist   # the icon tool breaks these two
+```
 
 ## Tests
 
